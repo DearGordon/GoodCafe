@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIR-zN-y9F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2813.04347826087" y="-172.09821428571428"/>
+            <point key="canvasLocation" x="2986.9565217391305" y="-267.1875"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="47g-0V-8fR">
@@ -119,7 +119,6 @@
         <!--地圖-->
         <scene sceneID="JbL-uQ-hiP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tO5-XD-L4C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0sc-Dr-jPd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="地圖" id="poO-H6-GXm"/>
                     <toolbarItems/>
@@ -133,6 +132,7 @@
                         <segue destination="EsE-7p-8pj" kind="relationship" relationship="rootViewController" id="g57-nD-xM1"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tO5-XD-L4C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1902.8985507246377" y="-172.09821428571428"/>
         </scene>

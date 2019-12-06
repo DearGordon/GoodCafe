@@ -7,7 +7,9 @@
 //
 import UIKit
 
-class ViewController: UIViewController,SetTabbarAndNavigationbar {
+class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable {
+
+    
     
     let searchBar = UISearchBar()
     
@@ -34,15 +36,14 @@ class ViewController: UIViewController,SetTabbarAndNavigationbar {
             searchBar.endEditing(true)
             return
         }
-        
-        let check = checkTabbarIsVisiable()
-        setTabbarVisable(visible: !check, animated: true)
+        setNaviBarVisable()
+        setTabbarVisable()
     }
     
     
     @IBAction func hidTabbar(_ sender: Any) {
-        let check = self.view.backgroundColor == UIColor.yellow
-        self.view.backgroundColor = check ? UIColor.red : UIColor.yellow
+        
+        showAlert(title: "你好", content: "內容", completion: nil)
     }
     
     
@@ -51,30 +52,65 @@ class ViewController: UIViewController,SetTabbarAndNavigationbar {
     
 }
 
-protocol SetTabbarAndNavigationbar {
-    func setTabbarVisable(visible:Bool,animated:Bool)
-    func checkTabbarIsVisiable()->Bool
+protocol ShowAlertable {
+    
+    func showAlert(title: String, content: String, actions: [UIAlertAction]?, preferredStyle: UIAlertController.Style, completion: (() -> ())?)
 }
 
-extension SetTabbarAndNavigationbar where Self:UIViewController{
+extension ShowAlertable where Self: UIViewController {
     
-    func setTabbarVisable(visible:Bool,animated:Bool){
-        guard let naviC = self.navigationController, let tabbarC = self.tabBarController else {return}
+    func showAlert(title: String, content: String, actions: [UIAlertAction]? = nil, preferredStyle: UIAlertController.Style = .alert, completion: (() -> ())?) {
+        let alert = UIAlertController(title: title, message: content, preferredStyle: preferredStyle)
+        if let actions = actions {
+            actions.forEach({ alert.addAction($0) })
+        }else{
+            alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
+        }
+        present(alert, animated: true, completion: completion)
+    }
+}
+
+
+
+
+protocol SetTabbarAndNavibarVisible {
+    func setNaviBarVisable()
+    func setTabbarVisable()
+}
+
+extension SetTabbarAndNavibarVisible where Self:UIViewController{
+    
+    func setNaviBarVisable(){
+        guard let naviContro = self.navigationController else { return }
+        let makeVisible = !(checkNaviBarIsVisable())
         
-        let tabbarY:CGFloat = (visible ? -50.0 : 50.0)
-        let navibarY:CGFloat = (visible ? 100 : -100)
-        let duration:TimeInterval = (animated ? 0.3 : 0.0)
+        let naviY:CGFloat = makeVisible ? 100:-100
+        UIView.animate(withDuration: 0.3) {
+            naviContro.navigationBar.frame = naviContro.navigationBar.frame.offsetBy(dx: 0, dy: naviY)
+            return
+        }
+    }
+    
+    func setTabbarVisable(){
+        guard let tabbarC = self.tabBarController else { return }
+        let makeVisible = !(checkTabbarIsVisiable())
         
-        UIView.animate(withDuration: duration) {
-            naviC.navigationBar.frame = naviC.navigationBar.frame.offsetBy(dx: 0, dy: navibarY)
+        let tabbarY:CGFloat = (makeVisible ? -50.0 : 50.0)
+        
+        UIView.animate(withDuration: 0.3) {
             tabbarC.tabBar.frame = tabbarC.tabBar.frame.offsetBy(dx: 0, dy: tabbarY)
             return
         }
     }
     
-    func checkTabbarIsVisiable()->Bool{
-        guard let tabBarController = tabBarController else {return false}
-        return tabBarController.tabBar.frame.origin.y < self.view.frame.maxY
+    private func checkNaviBarIsVisable()->Bool{
+        guard let naviContro = self.navigationController else { return false }
+        return naviContro.navigationBar.frame.maxY > 0
+    }
+    
+    private func checkTabbarIsVisiable()->Bool{
+        guard let tabBarContro = self.tabBarController else { return false }
+        return tabBarContro.tabBar.frame.origin.y < self.view.frame.maxY
     }
 }
 
