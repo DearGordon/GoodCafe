@@ -14,7 +14,7 @@
                     <view key="view" contentMode="scaleToFill" id="3jd-5I-0x0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="X85-FV-sHi"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="設定" id="yhr-z7-Xb5"/>
@@ -67,15 +67,30 @@
                                     <action selector="hidTabbar:" destination="EsE-7p-8pj" eventType="touchUpInside" id="cXb-Ks-wka"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k0z-4k-rJI" userLabel="TestView">
+                                <rect key="frame" x="0.0" y="896" width="414" height="184"/>
+                                <color key="backgroundColor" red="0.10190998545508075" green="0.062023467430427401" blue="0.56132274866104126" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="184" id="Adf-ZX-Lkq"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="k0z-4k-rJI" firstAttribute="trailing" secondItem="4mh-Mk-iVY" secondAttribute="trailing" id="6ID-GL-QFd"/>
+                            <constraint firstItem="k0z-4k-rJI" firstAttribute="centerX" secondItem="Ehb-Kw-A8Z" secondAttribute="centerX" id="Czg-Ac-uju"/>
+                            <constraint firstItem="k0z-4k-rJI" firstAttribute="top" secondItem="Ehb-Kw-A8Z" secondAttribute="top" constant="896" id="Q6o-do-alP"/>
+                            <constraint firstItem="k0z-4k-rJI" firstAttribute="leading" secondItem="4mh-Mk-iVY" secondAttribute="leading" id="eO5-FP-Kxz"/>
                             <constraint firstItem="N4u-pq-37H" firstAttribute="centerX" secondItem="Ehb-Kw-A8Z" secondAttribute="centerX" id="nNu-MJ-zbo"/>
                             <constraint firstItem="N4u-pq-37H" firstAttribute="centerY" secondItem="Ehb-Kw-A8Z" secondAttribute="centerY" id="s1e-pd-wqX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4mh-Mk-iVY"/>
                     </view>
                     <navigationItem key="navigationItem" title="search" id="dvr-rU-1uq"/>
+                    <connections>
+                        <outlet property="testView" destination="k0z-4k-rJI" id="78P-dw-kIs"/>
+                        <outlet property="testViewConstraY" destination="Q6o-do-alP" id="EJI-A8-cXT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIR-zN-y9F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -88,7 +103,7 @@
                     <view key="view" contentMode="scaleToFill" id="TgV-qb-NtQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="UBv-ix-hys"/>
                     </view>
                     <navigationItem key="navigationItem" id="ylK-zL-Uo0"/>
