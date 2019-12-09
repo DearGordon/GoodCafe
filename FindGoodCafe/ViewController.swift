@@ -7,34 +7,52 @@
 //
 import UIKit
 
+extension UITextField {
+    
+    func setMyClearButton() {
+        let clearButton = UIButton(type: .custom)
+        clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
+        clearButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
+        clearButton.contentMode = .scaleAspectFit
+        clearButton.addTarget(self, action: #selector(UITextField.clear(sender:)), for: .touchUpInside)
+        self.rightView = clearButton
+        self.rightViewMode = .whileEditing
+    }
+    
+    @objc func clear(sender : AnyObject) {
+        print("我想實作一個ViewController裡面的的func")
+        self.text = ""
+    }
+    
+}
+
 class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable {
 
-    let searchBar = UISearchBar()
+    let searchTF = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addSearchBarInNaviBar()
+        addSearchTFInNaviBar()
         addSingleTap()
         
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            print("UISearchBar.text cleared!")
-        }
+    func addSearchTFInNaviBar(){
+        guard let naviContro = self.navigationController else { return }
+        naviContro.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        naviContro.navigationBar.shadowImage = UIImage()
+        naviContro.navigationBar.isTranslucent = true
+        naviContro.view.backgroundColor = UIColor.clear
+        
+        searchTF.placeholder = "請搜尋你要的地點"
+        searchTF.frame = CGRect(x: 0, y: 0, width: self.view.frame.width*2/3, height: 30)
+        searchTF.setMyClearButton()
+        
+        self.navigationItem.titleView = searchTF
     }
     
-    func addSearchBarInNaviBar(){
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.view.backgroundColor = UIColor.clear
-        
-        searchBar.placeholder = "請搜尋你要的咖啡店"
-        
-        self.navigationItem.titleView = searchBar
-    }
+    
     
     func addSingleTap(){
         let singleFinger = UITapGestureRecognizer(
@@ -44,13 +62,13 @@ class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable 
     }
     
     @objc func singleTap(){
-        if searchBar.isFirstResponder{
-            searchBar.endEditing(true)
+        if searchTF.isFirstResponder{
+            searchTF.endEditing(true)
             return
         }
         setNaviBarVisable(makeVisible:!checkNaviBarIsVisable())
         setTabbarVisable(makeVisible:!checkTabbarIsVisiable())
-        setFootViewVisable(makeVisible: searchBar.text != "")
+        setFootViewVisable(makeVisible: searchTF.text != "")
     }
     
     @IBOutlet weak var testView: UIView!
@@ -74,7 +92,7 @@ class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable 
     }
     
     @IBAction func hidTabbar(_ sender: Any) {
-        searchBar.text = "點到按鈕了"
+        searchTF.text = "點到按鈕了"
         
         setTabbarVisable(makeVisible: false)
         setFootViewVisable(makeVisible: true)
@@ -145,7 +163,7 @@ extension SetTabbarAndNavibarVisible where Self:UIViewController{
         }
     }
     
-    func setTabbarVisable(makeVisible:Bool){
+     func setTabbarVisable(makeVisible:Bool){
         guard let tabbarContro = self.tabBarController else { return }
 //        let makeVisible = !(checkTabbarIsVisiable())
         let tabbarHight = tabbarContro.tabBar.frame.height
