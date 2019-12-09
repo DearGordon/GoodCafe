@@ -7,28 +7,10 @@
 //
 import UIKit
 
-extension UITextField {
-    
-    func setMyClearButton() {
-        let clearButton = UIButton(type: .custom)
-        clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
-        clearButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
-        clearButton.contentMode = .scaleAspectFit
-        clearButton.addTarget(self, action: #selector(UITextField.clear(sender:)), for: .touchUpInside)
-        self.rightView = clearButton
-        self.rightViewMode = .whileEditing
-    }
-    
-    @objc func clear(sender : AnyObject) {
-        print("我想實作一個ViewController裡面的的func")
-        self.text = ""
-    }
-    
-}
-
 class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable {
 
     let searchTF = UITextField()
+    var isPicking:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +20,25 @@ class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable 
         
     }
     
-    func addSearchTFInNaviBar(){
+    func setMyClearButton() {
+        let clearButton = UIButton(type: .custom)
+        clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
+        clearButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
+        clearButton.contentMode = .scaleAspectFit
+        clearButton.addTarget(self, action: #selector(clear(sender:)), for: .touchUpInside)
+        searchTF.rightView = clearButton
+        searchTF.rightViewMode = .always
+    }
+    
+    @objc func clear(sender : AnyObject) {
+        if searchTF.text == "" { return }
+        isPicking = false
+        setFootViewVisable(makeVisible: false)
+        setTabbarVisable(makeVisible: true)
+        searchTF.text = ""
+    }
+    
+    func addSearchTFInNaviBar() {
         guard let naviContro = self.navigationController else { return }
         naviContro.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         naviContro.navigationBar.shadowImage = UIImage()
@@ -47,44 +47,52 @@ class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable 
         
         searchTF.placeholder = "請搜尋你要的地點"
         searchTF.frame = CGRect(x: 0, y: 0, width: self.view.frame.width*2/3, height: 30)
-        searchTF.setMyClearButton()
+        setMyClearButton()
         
         self.navigationItem.titleView = searchTF
     }
     
     
     
-    func addSingleTap(){
+    func addSingleTap() {
         let singleFinger = UITapGestureRecognizer(
         target:self,
         action:#selector(singleTap))
         self.view.addGestureRecognizer(singleFinger)
     }
     
-    @objc func singleTap(){
-        if searchTF.isFirstResponder{
+    @objc func singleTap() {
+        if searchTF.isFirstResponder {
             searchTF.endEditing(true)
             return
         }
-        setNaviBarVisable(makeVisible:!checkNaviBarIsVisable())
-        setTabbarVisable(makeVisible:!checkTabbarIsVisiable())
-        setFootViewVisable(makeVisible: searchTF.text != "")
+        setNaviBarVisable(makeVisible: !checkNaviBarIsVisable())
+        
+        switch isPicking {
+        case true:
+            setFootViewVisable(makeVisible: !checkFootViewVisable())
+            setTabbarVisable(makeVisible: false)
+        case false:
+            setTabbarVisable(makeVisible: !checkTabbarIsVisiable())
+            setFootViewVisable(makeVisible: false)
+            
+        }
+        
     }
     
     @IBOutlet weak var testView: UIView!
     
-    func checkFootViewVisable()->Bool{
+    func checkFootViewVisable()->Bool {
         guard let testView = self.testView else { return false }
         print("testY=\(testView.frame.maxY),viewY=\(self.view.frame.maxY)")
         return testView.frame.minY < self.view.frame.maxY
     }
     
-    func setFootViewVisable(makeVisible:Bool){
-        let TestviewHight = self.testView.frame.height
-        let viewMaxY = self.view.frame.maxY
-//        let makeVisible = !checkFootViewVisable()
+    func setFootViewVisable(makeVisible:Bool) {
+        let footViewHight = self.testView.frame.height
+        let footViewMaxY = self.view.frame.maxY
         
-        testViewConstraY.constant = makeVisible ? (viewMaxY - TestviewHight) : viewMaxY
+        testViewConstraY.constant = makeVisible ? (footViewMaxY - footViewHight) : footViewMaxY
         
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -92,26 +100,14 @@ class ViewController: UIViewController,SetTabbarAndNavibarVisible,ShowAlertable 
     }
     
     @IBAction func hidTabbar(_ sender: Any) {
-        searchTF.text = "點到按鈕了"
+        searchTF.text = "金色三麥"
+        isPicking = true
         
         setTabbarVisable(makeVisible: false)
         setFootViewVisable(makeVisible: true)
+        setNaviBarVisable(makeVisible: true)
         
-        //把搜尋列加上x，點x要把tableview縮下去跟把文字清空
-        
-//        switch checkTabbarIsVisiable() {
-//        case true:
-//            setTabbarVisable(makeVisible:false)
-//            setFootViewVisable(makeVisible:true)
-//            return
-//        case false:
-//           setFootViewVisable(makeVisible:true)
-//           setNaviBarVisable(makeVisible:true)
-//            return
-//        }
-        
-//        showAlert(title: "你好", content: "內容", completion: nil)
-        
+
     }
     
     
@@ -147,41 +143,40 @@ protocol SetTabbarAndNavibarVisible {
     func setTabbarVisable(makeVisible:Bool)
 }
 
-extension SetTabbarAndNavibarVisible where Self:UIViewController{
+extension SetTabbarAndNavibarVisible where Self:UIViewController {
     
-    func setNaviBarVisable(makeVisible:Bool){
+    func setNaviBarVisable(makeVisible:Bool) {
         guard let naviContro = self.navigationController else { return }
-//        let makeVisible = !(checkNaviBarIsVisable())
         
+        let naviBarHight = naviContro.navigationBar.frame.height
+        let statusHight = self.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 20
         
-        let naviBarHight = naviContro.navigationBar.frame.height + 20   //要想辦法偵測statusbar的高度
-        
-        let naviY:CGFloat = makeVisible ? naviBarHight:-naviBarHight
+        let naviY:CGFloat = makeVisible ? statusHight : -naviBarHight
         UIView.animate(withDuration: 0.3) {
-            naviContro.navigationBar.frame = naviContro.navigationBar.frame.offsetBy(dx: 0, dy: naviY)
+            naviContro.navigationBar.frame.origin.y = naviY
             return
         }
     }
     
-     func setTabbarVisable(makeVisible:Bool){
+     func setTabbarVisable(makeVisible:Bool) {
         guard let tabbarContro = self.tabBarController else { return }
-//        let makeVisible = !(checkTabbarIsVisiable())
         let tabbarHight = tabbarContro.tabBar.frame.height
+        let viewY = self.view.frame.maxY
         
-        let tabbarY:CGFloat = (makeVisible ? -tabbarHight : tabbarHight)
+        let tabbarY:CGFloat = (makeVisible ? viewY-tabbarHight : viewY+tabbarHight)
         
         UIView.animate(withDuration: 0.3) {
-            tabbarContro.tabBar.frame = tabbarContro.tabBar.frame.offsetBy(dx: 0, dy: tabbarY)
+            tabbarContro.tabBar.frame.origin.y = tabbarY
             return
         }
     }
     
-    func checkNaviBarIsVisable()->Bool{
+    func checkNaviBarIsVisable()->Bool {
         guard let naviContro = self.navigationController else { return false }
         return naviContro.navigationBar.frame.maxY > 0
     }
     
-    func checkTabbarIsVisiable()->Bool{
+    func checkTabbarIsVisiable()->Bool {
         guard let tabBarContro = self.tabBarController else { return false }
         return tabBarContro.tabBar.frame.origin.y < self.view.frame.maxY
     }
