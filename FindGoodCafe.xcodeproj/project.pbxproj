@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,6 +19,11 @@
 		544DB01423A2496D0010595E /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DB01323A2496D0010595E /* Common.swift */; };
 		544DB01723A24A850010595E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544DB01623A24A850010595E /* MapKit.framework */; };
 		544DB01923A25BEF0010595E /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DB01823A25BEF0010595E /* Session.swift */; };
+		544DB05F23A788A60010595E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DB05E23A788A60010595E /* Model.swift */; };
+		544DB06123A78AEB0010595E /* SQLCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DB06023A78AEB0010595E /* SQLCommon.swift */; };
+		A29CF4B9145B18980FDE0AF8 /* Pods_FindGoodCafeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D894E51F65BFECE94BD4D1D /* Pods_FindGoodCafeTests.framework */; };
+		B7F86DC397AB83BCFB22BCD2 /* Pods_FindGoodCafe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B6E052E0C23FC814A00ED0 /* Pods_FindGoodCafe.framework */; };
+		D7B5B8F7ADA7901AB7BF77A9 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 925CFCAC71CDB246BCB61D54 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14B36EDB888D83AE1280D10D /* Pods-FindGoodCafeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafeTests.release.xcconfig"; path = "Target Support Files/Pods-FindGoodCafeTests/Pods-FindGoodCafeTests.release.xcconfig"; sourceTree = "<group>"; };
+		1D894E51F65BFECE94BD4D1D /* Pods_FindGoodCafeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindGoodCafeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F767ED17A9D5DFC420910B3 /* Pods-FindGoodCafeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafeTests.debug.xcconfig"; path = "Target Support Files/Pods-FindGoodCafeTests/Pods-FindGoodCafeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		20B6E052E0C23FC814A00ED0 /* Pods_FindGoodCafe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindGoodCafe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25099032B78172739CCC6C50 /* Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		544DAFDE2398F9BD0010595E /* FindGoodCafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindGoodCafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		544DAFE12398F9BD0010595E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		544DAFE32398F9BD0010595E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +67,12 @@
 		544DB01323A2496D0010595E /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		544DB01623A24A850010595E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		544DB01823A25BEF0010595E /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		544DB05E23A788A60010595E /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		544DB06023A78AEB0010595E /* SQLCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCommon.swift; sourceTree = "<group>"; };
+		5717AB233DED98B980A211F9 /* Pods-FindGoodCafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe.debug.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe.debug.xcconfig"; sourceTree = "<group>"; };
+		71BE1B70CE65DC5B5309BB85 /* Pods-FindGoodCafe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe.release.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe.release.xcconfig"; sourceTree = "<group>"; };
+		925CFCAC71CDB246BCB61D54 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindGoodCafe_FindGoodCafeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D247980237DE63F5064A9E80 /* Pods-FindGoodCafe-FindGoodCafeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe-FindGoodCafeUITests.debug.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				544DB01723A24A850010595E /* MapKit.framework in Frameworks */,
+				B7F86DC397AB83BCFB22BCD2 /* Pods_FindGoodCafe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29CF4B9145B18980FDE0AF8 /* Pods_FindGoodCafeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7B5B8F7ADA7901AB7BF77A9 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +112,7 @@
 				544DB0022398F9BE0010595E /* FindGoodCafeUITests */,
 				544DAFDF2398F9BD0010595E /* Products */,
 				544DB01523A24A850010595E /* Frameworks */,
+				8BF4B87A06BBC62F601630BC /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +132,8 @@
 				544DAFE12398F9BD0010595E /* AppDelegate.swift */,
 				544DAFE32398F9BD0010595E /* SceneDelegate.swift */,
 				544DAFE52398F9BD0010595E /* MapViewController.swift */,
+				544DB05E23A788A60010595E /* Model.swift */,
+				544DB06023A78AEB0010595E /* SQLCommon.swift */,
 				544DB01823A25BEF0010595E /* Session.swift */,
 				544DB01323A2496D0010595E /* Common.swift */,
 				544DB01123A0C9090010595E /* MapViewManager.swift */,
@@ -145,8 +167,24 @@
 			isa = PBXGroup;
 			children = (
 				544DB01623A24A850010595E /* MapKit.framework */,
+				20B6E052E0C23FC814A00ED0 /* Pods_FindGoodCafe.framework */,
+				925CFCAC71CDB246BCB61D54 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework */,
+				1D894E51F65BFECE94BD4D1D /* Pods_FindGoodCafeTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8BF4B87A06BBC62F601630BC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5717AB233DED98B980A211F9 /* Pods-FindGoodCafe.debug.xcconfig */,
+				71BE1B70CE65DC5B5309BB85 /* Pods-FindGoodCafe.release.xcconfig */,
+				D247980237DE63F5064A9E80 /* Pods-FindGoodCafe-FindGoodCafeUITests.debug.xcconfig */,
+				25099032B78172739CCC6C50 /* Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig */,
+				1F767ED17A9D5DFC420910B3 /* Pods-FindGoodCafeTests.debug.xcconfig */,
+				14B36EDB888D83AE1280D10D /* Pods-FindGoodCafeTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,9 +194,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 544DB0082398F9BE0010595E /* Build configuration list for PBXNativeTarget "FindGoodCafe" */;
 			buildPhases = (
+				6358E8A14CAC77DD40B744EB /* [CP] Check Pods Manifest.lock */,
 				544DAFDA2398F9BD0010595E /* Sources */,
 				544DAFDB2398F9BD0010595E /* Frameworks */,
 				544DAFDC2398F9BD0010595E /* Resources */,
+				8ADD6EAB1AB3C1DBBF102DEE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -173,6 +213,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 544DB00B2398F9BE0010595E /* Build configuration list for PBXNativeTarget "FindGoodCafeTests" */;
 			buildPhases = (
+				771D9D4804C864B19269A94D /* [CP] Check Pods Manifest.lock */,
 				544DAFF02398F9BE0010595E /* Sources */,
 				544DAFF12398F9BE0010595E /* Frameworks */,
 				544DAFF22398F9BE0010595E /* Resources */,
@@ -191,9 +232,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 544DB00E2398F9BE0010595E /* Build configuration list for PBXNativeTarget "FindGoodCafeUITests" */;
 			buildPhases = (
+				B1CECF92C3C25F033597BD3A /* [CP] Check Pods Manifest.lock */,
 				544DAFFB2398F9BE0010595E /* Sources */,
 				544DAFFC2398F9BE0010595E /* Frameworks */,
 				544DAFFD2398F9BE0010595E /* Resources */,
+				59E8B55F4A6482A49FEF2B26 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -275,6 +318,109 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		59E8B55F4A6482A49FEF2B26 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6358E8A14CAC77DD40B744EB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FindGoodCafe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		771D9D4804C864B19269A94D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FindGoodCafeTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8ADD6EAB1AB3C1DBBF102DEE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B1CECF92C3C25F033597BD3A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FindGoodCafe-FindGoodCafeUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		544DAFDA2398F9BD0010595E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -282,6 +428,8 @@
 			files = (
 				544DAFE62398F9BD0010595E /* MapViewController.swift in Sources */,
 				544DAFE22398F9BD0010595E /* AppDelegate.swift in Sources */,
+				544DB05F23A788A60010595E /* Model.swift in Sources */,
+				544DB06123A78AEB0010595E /* SQLCommon.swift in Sources */,
 				544DB01923A25BEF0010595E /* Session.swift in Sources */,
 				544DAFE42398F9BD0010595E /* SceneDelegate.swift in Sources */,
 				544DB01423A2496D0010595E /* Common.swift in Sources */,
@@ -456,6 +604,7 @@
 		};
 		544DB0092398F9BE0010595E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5717AB233DED98B980A211F9 /* Pods-FindGoodCafe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -474,6 +623,7 @@
 		};
 		544DB00A2398F9BE0010595E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71BE1B70CE65DC5B5309BB85 /* Pods-FindGoodCafe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -492,6 +642,7 @@
 		};
 		544DB00C2398F9BE0010595E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F767ED17A9D5DFC420910B3 /* Pods-FindGoodCafeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -514,6 +665,7 @@
 		};
 		544DB00D2398F9BE0010595E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14B36EDB888D83AE1280D10D /* Pods-FindGoodCafeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -536,6 +688,7 @@
 		};
 		544DB00F2398F9BE0010595E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D247980237DE63F5064A9E80 /* Pods-FindGoodCafe-FindGoodCafeUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -556,6 +709,7 @@
 		};
 		544DB0102398F9BE0010595E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25099032B78172739CCC6C50 /* Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

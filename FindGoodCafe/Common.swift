@@ -10,7 +10,7 @@ import UIKit
 
 protocol ShowAlertable {
     
-    func showAlert(title: String, content: String, actions: [UIAlertAction]?, preferredStyle: UIAlertController.Style, completion: (() -> ())?)
+    func showAlert (title: String, content: String, actions: [UIAlertAction]?, preferredStyle: UIAlertController.Style, completion: (() -> ())?)
 }
 
 extension ShowAlertable where Self: UIViewController {
