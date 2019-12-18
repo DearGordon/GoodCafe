@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5403468623A9CF8100BD095D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403468523A9CF8100BD095D /* ListTableViewController.swift */; };
+		5403468823A9D9A700BD095D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403468723A9D9A700BD095D /* DetailViewController.swift */; };
 		544DAFE22398F9BD0010595E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DAFE12398F9BD0010595E /* AppDelegate.swift */; };
 		544DAFE42398F9BD0010595E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DAFE32398F9BD0010595E /* SceneDelegate.swift */; };
 		544DAFE62398F9BD0010595E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DAFE52398F9BD0010595E /* MapViewController.swift */; };
@@ -49,6 +51,8 @@
 		1F767ED17A9D5DFC420910B3 /* Pods-FindGoodCafeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafeTests.debug.xcconfig"; path = "Target Support Files/Pods-FindGoodCafeTests/Pods-FindGoodCafeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		20B6E052E0C23FC814A00ED0 /* Pods_FindGoodCafe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindGoodCafe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25099032B78172739CCC6C50 /* Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		5403468523A9CF8100BD095D /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		5403468723A9D9A700BD095D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		544DAFDE2398F9BD0010595E /* FindGoodCafe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindGoodCafe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		544DAFE12398F9BD0010595E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		544DAFE32398F9BD0010595E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 		544DAFE02398F9BD0010595E /* FindGoodCafe */ = {
 			isa = PBXGroup;
 			children = (
+				5403468523A9CF8100BD095D /* ListTableViewController.swift */,
+				5403468723A9D9A700BD095D /* DetailViewController.swift */,
 				544DAFE12398F9BD0010595E /* AppDelegate.swift */,
 				544DAFE32398F9BD0010595E /* SceneDelegate.swift */,
 				544DAFE52398F9BD0010595E /* MapViewController.swift */,
@@ -432,6 +438,8 @@
 				544DB06123A78AEB0010595E /* SQLCommon.swift in Sources */,
 				544DB01923A25BEF0010595E /* Session.swift in Sources */,
 				544DAFE42398F9BD0010595E /* SceneDelegate.swift in Sources */,
+				5403468623A9CF8100BD095D /* ListTableViewController.swift in Sources */,
+				5403468823A9D9A700BD095D /* DetailViewController.swift in Sources */,
 				544DB01423A2496D0010595E /* Common.swift in Sources */,
 				544DB01223A0C9090010595E /* MapViewManager.swift in Sources */,
 			);
