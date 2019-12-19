@@ -204,7 +204,7 @@
 				544DAFDA2398F9BD0010595E /* Sources */,
 				544DAFDB2398F9BD0010595E /* Frameworks */,
 				544DAFDC2398F9BD0010595E /* Resources */,
-				8ADD6EAB1AB3C1DBBF102DEE /* [CP] Embed Pods Frameworks */,
+				17D2AE5C781757C5BBBFFE3D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -242,7 +242,7 @@
 				544DAFFB2398F9BE0010595E /* Sources */,
 				544DAFFC2398F9BE0010595E /* Frameworks */,
 				544DAFFD2398F9BE0010595E /* Resources */,
-				59E8B55F4A6482A49FEF2B26 /* [CP] Embed Pods Frameworks */,
+				34076A04BCFBB737D5B7D89A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -325,7 +325,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		59E8B55F4A6482A49FEF2B26 /* [CP] Embed Pods Frameworks */ = {
+		17D2AE5C781757C5BBBFFE3D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		34076A04BCFBB737D5B7D89A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -384,23 +401,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8ADD6EAB1AB3C1DBBF102DEE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B1CECF92C3C25F033597BD3A /* [CP] Check Pods Manifest.lock */ = {
