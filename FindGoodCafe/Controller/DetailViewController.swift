@@ -15,7 +15,6 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setText()
-        print("細節在這\(self.shopeDetail)")
     }
     
     func setText() {

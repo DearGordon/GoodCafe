@@ -10,9 +10,6 @@ import CoreLocation
 import MapKit
 
 
-
-
-
 class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlertable, MKMapViewDelegate{
     
     let locationManager = CLLocationManager()
@@ -20,17 +17,67 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     var isPicking: Bool = false
     static var pinsArray: [CoffeeShop] = []
     @IBOutlet weak var mapView: MKMapView!
+    var selectStore:[CoffeeShop]?
+    
+    let searchBar = UISearchBar()
+    
+    
+    @IBOutlet weak var nameLB: UILabel!
+    @IBOutlet weak var addressLB: UILabel!
+    @IBOutlet weak var urlLB: UILabel!
     
     override func viewDidLoad() {
-           super.viewDidLoad()
+        super.viewDidLoad()
         
-           setMap()
-           addSearchTFInNaviBar()
-           addSingleTap()
-           checkData()
-       }
+        setMap()
+        addSearchTFInNaviBar()
+        addSingleTap()
+        checkData()
+        
+        
+    }
     
-    //FIXME:fix some pin cant show information
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let pinCoordinate = view.annotation?.coordinate else { return }
+        
+        selectStore = MapViewController.pinsArray.filter({Double($0.latitude!) == pinCoordinate.latitude && Double($0.longitude!) == pinCoordinate.longitude})
+        
+        searchTF.text = selectStore?[0].name
+        nameLB.text = selectStore?[0].name
+        urlLB.text = selectStore?[0].url
+        
+        if selectStore?[0].url == "" {
+            urlLB.text = "無資料"
+        }
+        addressLB.text = selectStore?[0].address
+        
+        isPicking = true
+        
+        //TODO:記得用Enum包起來以下
+        setTabbarVisable(makeVisible: false)
+        setFootViewVisable(makeVisible: true)
+        setNaviBarVisable(makeVisible: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        zoomUserLocat()
+    }
+    
+    //FIXME:currentLocation Btn Autolayout
+    @IBAction func userLocationBtn(_ sender: Any) {
+        self.zoomUserLocat()
+        
+    }
+    
+    func zoomUserLocat() {
+        if let userLocation = locationManager.location?.coordinate {
+            let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 200,longitudinalMeters: 200)
+            mapView.setRegion(viewRegion, animated: true)
+        }
+    }
+    
+    
     func pin(places: [CoffeeShop], map: MKMapView){
         
         for place in places {
@@ -55,39 +102,7 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     
     
     let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
-//    let urlSession = URLSession(configuration: .default)
-//    func downloadData(url: String ,complite: @escaping (Any?) -> Void) {
-//        guard let url = URL(string: urlString) else { return}
-//        let task = urlSession.dataTask(with: url) { (data, respone, error) in
-//
-//            if error != nil{
-//                let errorCode = (error! as NSError).code
-//                switch errorCode {
-//                case -1009:
-//                    self.showAlert(title: "沒有網路", content: "請檢查網路連線", completion: nil)
-//                    return
-//                default:
-//                    print(error)
-//                    self.showAlert(title: "錯誤", content: "下載檔案時發生未知錯誤\(errorCode)", completion: nil)
-//                    return
-//                }
-//            }
-//
-//
-//            guard let data = data else { return }
-//            do{
-//                let dataDecoded = try JSONDecoder().decode([CoffeeShop].self, from: data)
-//                print("解析完成開始escaping")
-//                complite(dataDecoded)
-//            } catch {
-//                print(error)
-//                complite(nil)
-//                self.showAlert(title: "錯誤", content: "解析下載檔案失敗)", completion: nil)
-//            }
-//        }
-//
-//        task.resume()
-//    }
+
     
     func setMap(){
         mapView.delegate = self
@@ -96,16 +111,17 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
+    //TODO:下載放在Delegate
     func checkData(){
         if SQLCommon.shared.getSQLData().count != 0 {
             MapViewController.pinsArray = SQLCommon.shared.getSQLData()
-
+            
             self.pin(places: MapViewController.self.pinsArray, map: self.mapView)
         }else{
             let erroeString: String? = Session.share.downloadData(url: urlString, complite: { (data) in
                 MapViewController.self.pinsArray = data as! [CoffeeShop]
                 //TODO:test online data first
-//                self.pinsArray.forEach({SQLCommon.shared.addData(coffeeShop: $0)})
+                MapViewController.self.pinsArray.forEach({SQLCommon.shared.addData(coffeeShop: $0)})
                 self.pin(places: MapViewController.self.pinsArray, map: self.mapView)
             })
             
@@ -113,10 +129,13 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
                 self.showAlert(title: "Error", content: erroeString, completion: nil)
             }
         }
-
+        
     }
     
     func setMyClearButton() {
+        
+        
+        
         let clearButton = UIButton(type: .custom)
         clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
         clearButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
@@ -141,11 +160,12 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         naviContro.navigationBar.isTranslucent = true
         naviContro.view.backgroundColor = UIColor.clear
         
-        searchTF.placeholder = "請搜尋你要的地點"
+        searchTF.attributedPlaceholder = NSAttributedString(string: "請搜尋你要的地點", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         searchTF.frame = CGRect(x: 0, y: 0, width: self.view.frame.width*2/3, height: 30)
         setMyClearButton()
         
-        self.navigationItem.titleView = searchTF
+//        self.navigationItem.titleView = searchTF
+        self.navigationItem.titleView = searchBar
     }
     
     
@@ -176,19 +196,21 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         
     }
     
-    @IBOutlet weak var testView: UIView!
+    @IBOutlet weak var footView: UIView!
     
     func checkFootViewVisable() -> Bool {
-        guard let testView = self.testView else { return false }
+        guard let testView = self.footView else { return false }
         print("testY=\(testView.frame.maxY),viewY=\(self.view.frame.maxY)")
         return testView.frame.minY < self.view.frame.maxY
     }
     
     func setFootViewVisable(makeVisible: Bool) {
-        let footViewHight = self.testView.frame.height
+        let footViewHight = self.footView.frame.height
         let footViewMaxY = self.view.frame.maxY
         
-        testViewConstraY.constant = makeVisible ? (footViewMaxY - footViewHight) : footViewMaxY
+        self.view.bringSubviewToFront(footView)
+        
+        footViewConstraY.constant = makeVisible ? (footViewMaxY - footViewHight) : footViewMaxY
         
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -205,7 +227,7 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     }
     
     
-    @IBOutlet weak var testViewConstraY: NSLayoutConstraint!
+    @IBOutlet weak var footViewConstraY: NSLayoutConstraint!
     
     
     
@@ -218,5 +240,49 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
 
 
 
+
+protocol SetTabbarAndNavibarVisible {
+    func setNaviBarVisable(makeVisible: Bool)
+    func setTabbarVisable(makeVisible: Bool)
+}
+
+extension SetTabbarAndNavibarVisible where Self: UIViewController {
+    
+    func setNaviBarVisable(makeVisible: Bool) {
+        guard let naviContro = self.navigationController else { return }
+        
+        let naviBarHight = naviContro.navigationBar.frame.height
+        let statusHight = self.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 20
+        
+        let naviY: CGFloat = makeVisible ? statusHight : -naviBarHight
+        UIView.animate(withDuration: 0.3) {
+            naviContro.navigationBar.frame.origin.y = naviY
+            return
+        }
+    }
+    
+    func setTabbarVisable(makeVisible: Bool) {
+        guard let tabbarContro = self.tabBarController else { return }
+        let tabbarHight = tabbarContro.tabBar.frame.height
+        let viewY = self.view.frame.maxY
+        
+        let tabbarY: CGFloat = (makeVisible ? viewY-tabbarHight : viewY+tabbarHight)
+        
+        UIView.animate(withDuration: 0.3) {
+            tabbarContro.tabBar.frame.origin.y = tabbarY
+            return
+        }
+    }
+    
+    func checkNaviBarIsVisable() -> Bool {
+        guard let naviContro = self.navigationController else { return false }
+        return naviContro.navigationBar.frame.maxY > 0
+    }
+    
+    func checkTabbarIsVisiable() -> Bool {
+        guard let tabBarContro = self.tabBarController else { return false }
+        return tabBarContro.tabBar.frame.origin.y < self.view.frame.maxY
+    }
+}
 
 
