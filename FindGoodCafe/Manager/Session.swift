@@ -10,47 +10,61 @@ import UIKit
 
 class Session: NSObject {
     
+    var shopesData: [CoffeeShop]?
+    var errorString: String?
     static let share = Session()
     
     let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
     let urlSession = URLSession(configuration: .default)
     
-    func downloadData(url: String ,complite: @escaping (Any?) -> Void) -> String?{
-        var errorString: String?
-        guard let url = URL(string: urlString) else { return errorString}
-        let task = urlSession.dataTask(with: url) { (data, respone, error) in
+    func checkDataIsOK(){
+        let semaphore =  DispatchSemaphore(value: 0)
+        
+        if SQLCommon.shared.getSQLData().count != 0 {
+            Session.share.shopesData = SQLCommon.shared.getSQLData()
+        }else{
             
-            if error != nil{
-                let errorCode = (error! as NSError).code
+            let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
+            Session.share.downloadData(url: urlString) { (data) in
+                semaphore.signal()
+                switch data {
+                case .success(let value): Session.share.shopesData = value
+                case .failure(let error): Session.share.errorString = error.localizedDescription
+                }
+            }
+            semaphore.wait()
+        }
+    }
+    
+    func downloadData(url: String, complite: @escaping (Result<[CoffeeShop],Error>) -> Void) {
+        
+        guard let url = URL(string: urlString ) else { return }
+
+        let task = urlSession.dataTask(with: url) { (data, respone, error) in
+            if let error = error {
+                let errorCode = (error as NSError).code
                 switch errorCode {
                 case -1009:
-                    errorString = "沒有網路"
-//                    self.showAlert(title: "沒有網路", content: "請檢查網路連線", completion: nil)
+                    complite(.failure(error))
                     return
                 default:
-                    errorString = "\(errorCode)"
-//                    self.showAlert(title: "錯誤", content: "下載檔案時發生未知錯誤\(errorCode)", completion: nil)
+                    complite(.failure(error))
                     return
                 }
             }
             
-            
             guard let data = data else { return }
+            
             do{
                 let dataDecoded = try JSONDecoder().decode([CoffeeShop].self, from: data)
-                print("解析完成開始escaping")
-                complite(dataDecoded)
+                complite(.success(dataDecoded))
             } catch {
-                print(error)
-                complite(nil)
-                errorString = "fail to Decod data"
-//                self.showAlert(title: "錯誤", content: "解析下載檔案失敗)", completion: nil)
+                complite(.failure(error))
             }
         }
         
         task.resume()
         
-        return errorString
     }
-
+    
 }

@@ -18,9 +18,9 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     static var pinsArray: [CoffeeShop] = []
     @IBOutlet weak var mapView: MKMapView!
     var selectStore:[CoffeeShop]?
-    
     let searchBar = UISearchBar()
     
+    var downloadError:String?
     
     @IBOutlet weak var nameLB: UILabel!
     @IBOutlet weak var addressLB: UILabel!
@@ -32,8 +32,7 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         setMap()
         addSearchTFInNaviBar()
         addSingleTap()
-        checkData()
-        
+        loadData()
         
     }
     
@@ -57,20 +56,21 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         setTabbarVisable(makeVisible: false)
         setFootViewVisable(makeVisible: true)
         setNaviBarVisable(makeVisible: true)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        zoomUserLocat()
+        zoomToUserLocat()
     }
     
     //FIXME:currentLocation Btn Autolayout
     @IBAction func userLocationBtn(_ sender: Any) {
-        self.zoomUserLocat()
+        self.zoomToUserLocat()
         
     }
     
-    func zoomUserLocat() {
+    func zoomToUserLocat() {
         if let userLocation = locationManager.location?.coordinate {
             let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 200,longitudinalMeters: 200)
             mapView.setRegion(viewRegion, animated: true)
@@ -111,30 +111,15 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-    //TODO:下載放在Delegate
-    func checkData(){
-        if SQLCommon.shared.getSQLData().count != 0 {
-            MapViewController.pinsArray = SQLCommon.shared.getSQLData()
-            
-            self.pin(places: MapViewController.self.pinsArray, map: self.mapView)
-        }else{
-            let erroeString: String? = Session.share.downloadData(url: urlString, complite: { (data) in
-                MapViewController.self.pinsArray = data as! [CoffeeShop]
-                //TODO:test online data first
-                MapViewController.self.pinsArray.forEach({SQLCommon.shared.addData(coffeeShop: $0)})
-                self.pin(places: MapViewController.self.pinsArray, map: self.mapView)
-            })
-            
-            if let erroeString = erroeString {
-                self.showAlert(title: "Error", content: erroeString, completion: nil)
-            }
+    func loadData(){
+        guard let shopesArray = Session.share.shopesData else {
+            self.showAlert(title: "Error", content: Session.share.errorString ?? "", completion: nil)
+            return
         }
-        
+        self.pin(places: shopesArray, map: mapView)
     }
     
     func setMyClearButton() {
-        
-        
         
         let clearButton = UIButton(type: .custom)
         clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
