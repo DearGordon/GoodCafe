@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--search-->
+        <!--Map View Controller-->
         <scene sceneID="KpZ-8a-9Hn">
             <objects>
                 <viewController id="EsE-7p-8pj" customClass="MapViewController" customModule="FindGoodCafe" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,6 +20,7 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9jT-Lr-t76">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="184"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="HVJ-Dw-tus">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="184"/>
@@ -95,7 +96,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4mh-Mk-iVY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="search" id="dvr-rU-1uq"/>
+                    <navigationItem key="navigationItem" id="dvr-rU-1uq"/>
                     <connections>
                         <outlet property="addressLB" destination="9ts-mS-g6o" id="7il-eB-obx"/>
                         <outlet property="footView" destination="k0z-4k-rJI" id="78P-dw-kIs"/>
@@ -109,21 +110,33 @@
             </objects>
             <point key="canvasLocation" x="3007.2463768115945" y="-172.09821428571428"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="47g-0V-8fR">
+        <!--Search ResultVC-->
+        <scene sceneID="bae-eB-TS3">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="JD2-A8-9Jz" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="TgV-qb-NtQ">
+                <tableViewController storyboardIdentifier="result" id="r0z-lU-n0R" customClass="SearchResultVC" customModule="FindGoodCafe" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="95k-iR-M3j">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="UBv-ix-hys"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="ylK-zL-Uo0"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6mk-C8-ObY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="wrg-1B-SHc">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wrg-1B-SHc" id="YIK-Bh-Qlz">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="r0z-lU-n0R" id="mcX-Rf-OBV"/>
+                            <outlet property="delegate" destination="r0z-lU-n0R" id="gC0-X6-JmA"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gJg-Gw-BfO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3910.144927536232" y="-167.41071428571428"/>
+            <point key="canvasLocation" x="3893" y="-174"/>
         </scene>
         <!--地圖-->
         <scene sceneID="JbL-uQ-hiP">

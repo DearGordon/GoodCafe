@@ -9,25 +9,43 @@ import UIKit
 import CoreLocation
 import MapKit
 
+enum MapStatuse {
+    
+    case selectShope
+    case standard
+    case clearMap
+    
+}
+
+
 
 class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlertable, MKMapViewDelegate{
+    
+    var searchCtrl: UISearchController!
+    var searchResult :[CoffeeShop] = [CoffeeShop]()
+    var isSearching: Bool = false
+    var footVis: Bool = false
     
     let locationManager = CLLocationManager()
     let searchTF = UITextField()
     var isPicking: Bool = false
-    static var pinsArray: [CoffeeShop] = []
-    @IBOutlet weak var mapView: MKMapView!
+    var pinsArray: [CoffeeShop] = []
     var selectStore:[CoffeeShop]?
-    let searchBar = UISearchBar()
-    
     var downloadError:String?
     
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var nameLB: UILabel!
     @IBOutlet weak var addressLB: UILabel!
     @IBOutlet weak var urlLB: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let data = Session.share.shopesData {
+            self.pinsArray = data
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(clickedCancel), name: NSNotification.Name(rawValue: "hidfootview"), object: nil)
         
         setMap()
         addSearchTFInNaviBar()
@@ -36,27 +54,49 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         
     }
     
+    func setMapStatuse(statuse: MapStatuse) {
+        switch statuse {
+        case .clearMap:
+            setTabbarVisable(makeVisible: false)
+            setFootViewVisable(makeVisible: false)
+            setNaviBarVisable(makeVisible: false)
+        case .selectShope:
+            setTabbarVisable(makeVisible: false)
+            setFootViewVisable(makeVisible: true)
+            setNaviBarVisable(makeVisible: true)
+        case .standard:
+            setTabbarVisable(makeVisible: true)
+            setFootViewVisable(makeVisible: false)
+            setNaviBarVisable(makeVisible: true)
+        }
+    }
+    
+    func setFootView(shope:CoffeeShop?) {
+        searchCtrl.searchBar.text = shope?.name ?? ""
+        nameLB.text = shope?.name ?? ""
+        urlLB.text = shope?.url ?? ""
+        
+        if shope?.url == "" {
+            urlLB.text = "無資料"
+        }
+        addressLB.text = shope?.address
+        if selectStore?.count != 0 && selectStore != nil {
+            isPicking = true
+            print(selectStore)
+        }
+        
+        
+        //TODO:記得用Enum包起來以下
+        setMapStatuse(statuse: .selectShope)
+        
+    }
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let pinCoordinate = view.annotation?.coordinate else { return }
         
-        selectStore = MapViewController.pinsArray.filter({Double($0.latitude!) == pinCoordinate.latitude && Double($0.longitude!) == pinCoordinate.longitude})
-        
-        searchTF.text = selectStore?[0].name
-        nameLB.text = selectStore?[0].name
-        urlLB.text = selectStore?[0].url
-        
-        if selectStore?[0].url == "" {
-            urlLB.text = "無資料"
-        }
-        addressLB.text = selectStore?[0].address
-        
-        isPicking = true
-        
-        //TODO:記得用Enum包起來以下
-        setTabbarVisable(makeVisible: false)
-        setFootViewVisable(makeVisible: true)
-        setNaviBarVisable(makeVisible: true)
-        
+        selectStore = self.pinsArray.filter({Double($0.latitude!) == pinCoordinate.latitude && Double($0.longitude!) == pinCoordinate.longitude})
+        guard let shope = selectStore?[0] else { return }
+        setFootView(shope: shope)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -94,12 +134,7 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
             map.reloadInputViews()
             print("重整地圖")
         }
-        
-        
     }
-    
-    
-    
     
     let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
 
@@ -112,11 +147,11 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     }
     
     func loadData(){
-        guard let shopesArray = Session.share.shopesData else {
-            self.showAlert(title: "Error", content: Session.share.errorString ?? "", completion: nil)
+        guard let errorString = Session.share.errorString else {
+            self.pin(places: pinsArray, map: mapView)
             return
         }
-        self.pin(places: shopesArray, map: mapView)
+        self.showAlert(title: "Error", content: errorString, completion: nil)
     }
     
     func setMyClearButton() {
@@ -139,18 +174,22 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     }
     
     func addSearchTFInNaviBar() {
-        guard let naviContro = self.navigationController else { return }
-        naviContro.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        naviContro.navigationBar.shadowImage = UIImage()
-        naviContro.navigationBar.isTranslucent = true
-        naviContro.view.backgroundColor = UIColor.clear
+        guard let naviCtrl = self.navigationController else { return }
+        naviCtrl.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        naviCtrl.navigationBar.shadowImage = UIImage()
+        naviCtrl.navigationBar.isTranslucent = true
+        naviCtrl.view.backgroundColor = UIColor.clear
         
-        searchTF.attributedPlaceholder = NSAttributedString(string: "請搜尋你要的地點", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-        searchTF.frame = CGRect(x: 0, y: 0, width: self.view.frame.width*2/3, height: 30)
-        setMyClearButton()
         
-//        self.navigationItem.titleView = searchTF
-        self.navigationItem.titleView = searchBar
+        if let vc = storyboard?.instantiateViewController(identifier: "result") as? SearchResultVC {
+            vc.data = self.pinsArray
+            searchCtrl = UISearchController(searchResultsController: vc)
+            searchCtrl.searchResultsUpdater = vc
+            
+            self.navigationItem.searchController = searchCtrl
+        }
+        
+
     }
     
     
@@ -171,11 +210,25 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         
         switch isPicking {
         case true:
-            setFootViewVisable(makeVisible: !checkFootViewVisable())
-            setTabbarVisable(makeVisible: false)
+            if !checkNaviBarIsVisable(){
+                print("清楚")
+                setMapStatuse(statuse: .clearMap)
+                return
+            }
+            print("選擇")
+            setMapStatuse(statuse: .selectShope)
+//            setFootViewVisable(makeVisible: !checkFootViewVisable())
+//            setTabbarVisable(makeVisible: false)
         case false:
-            setTabbarVisable(makeVisible: !checkTabbarIsVisiable())
-            setFootViewVisable(makeVisible: false)
+            if !checkNaviBarIsVisable(){
+                print("清楚")
+                setMapStatuse(statuse: .clearMap)
+                return
+            }
+            print("一般")
+            setMapStatuse(statuse: .standard)
+//            setTabbarVisable(makeVisible: !checkTabbarIsVisiable())
+//            setFootViewVisable(makeVisible: false)
             
         }
         
@@ -184,9 +237,17 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     @IBOutlet weak var footView: UIView!
     
     func checkFootViewVisable() -> Bool {
-        guard let testView = self.footView else { return false }
-        print("testY=\(testView.frame.maxY),viewY=\(self.view.frame.maxY)")
-        return testView.frame.minY < self.view.frame.maxY
+        guard let footView = self.footView else { return false }
+        return footView.frame.minY < self.view.frame.maxY
+    }
+    
+    //FIXME:要解決若使用者沒有點Cancel而點其他地方，footview也要有點cancel的效果
+    @objc func clickedCancel() {
+        selectStore = nil
+        isPicking = false
+        setFootView(shope: nil)
+        setFootViewVisable(makeVisible: false)
+        setTabbarVisable(makeVisible: true)
     }
     
     func setFootViewVisable(makeVisible: Bool) {
@@ -204,7 +265,7 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     
     @IBAction func pressPin(_ sender: Any) {
         searchTF.text = "金色三麥"
-        isPicking = true
+//        isPicking = true
         
         setTabbarVisable(makeVisible: false)
         setFootViewVisable(makeVisible: true)

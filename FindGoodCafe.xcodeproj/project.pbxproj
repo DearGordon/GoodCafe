@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5403468623A9CF8100BD095D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403468523A9CF8100BD095D /* ListTableViewController.swift */; };
 		5403468823A9D9A700BD095D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403468723A9D9A700BD095D /* DetailViewController.swift */; };
+		540B40B523B360B700C7261E /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540B40B423B360B700C7261E /* SearchResultVC.swift */; };
 		544156FF23AB2740003A73FB /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544156FE23AB2740003A73FB /* Map.storyboard */; };
 		5441570223AB2795003A73FB /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5441570123AB2795003A73FB /* List.storyboard */; };
 		5441570423AB27B1003A73FB /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5441570323AB27B1003A73FB /* Setting.storyboard */; };
@@ -55,6 +56,7 @@
 		25099032B78172739CCC6C50 /* Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5403468523A9CF8100BD095D /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		5403468723A9D9A700BD095D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		540B40B423B360B700C7261E /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
 		544156FE23AB2740003A73FB /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		5441570123AB2795003A73FB /* List.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = List.storyboard; sourceTree = "<group>"; };
 		5441570323AB27B1003A73FB /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				5403468523A9CF8100BD095D /* ListTableViewController.swift */,
 				5403468723A9D9A700BD095D /* DetailViewController.swift */,
 				544DAFE52398F9BD0010595E /* MapViewController.swift */,
+				540B40B423B360B700C7261E /* SearchResultVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 				5403468623A9CF8100BD095D /* ListTableViewController.swift in Sources */,
 				5403468823A9D9A700BD095D /* DetailViewController.swift in Sources */,
 				544DB01423A2496D0010595E /* Common.swift in Sources */,
+				540B40B523B360B700C7261E /* SearchResultVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
