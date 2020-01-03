@@ -10,16 +10,12 @@ import CoreLocation
 import MapKit
 
 enum MapStatuse {
-    
     case selectShope
     case standard
     case clearMap
-    
 }
 
-
-
-class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlertable, MKMapViewDelegate{
+class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlertable, MKMapViewDelegate ,UISearchControllerDelegate {
     
     var searchCtrl: UISearchController!
     var searchResult :[CoffeeShop] = [CoffeeShop]()
@@ -34,9 +30,23 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     var downloadError:String?
     
     @IBOutlet weak var mapView: MKMapView!
+    
     @IBOutlet weak var nameLB: UILabel!
     @IBOutlet weak var addressLB: UILabel!
+    @IBOutlet weak var open_timeLB: UILabel!
+    @IBOutlet weak var seatLB: UILabel!
+    @IBOutlet weak var cheapLB: UILabel!
+    @IBOutlet weak var wifiLB: UILabel!
+    @IBOutlet weak var quietLB: UILabel!
+    @IBOutlet weak var tastyLB: UILabel!
+    @IBOutlet weak var musicLB: UILabel!
+    @IBOutlet weak var limited_timeLB: UILabel!
+    @IBOutlet weak var socketLB: UILabel!
+    @IBOutlet weak var standing_deskLB: UILabel!
+    @IBOutlet weak var mrtLB: UILabel!
     @IBOutlet weak var urlLB: UILabel!
+    @IBOutlet weak var footView: UIView!
+    @IBOutlet weak var footViewConstraY: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +55,10 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
             self.pinsArray = data
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(clickedCancel), name: NSNotification.Name(rawValue: "hidfootview"), object: nil)
-        
         setMap()
         addSearchTFInNaviBar()
-        addSingleTap()
+        addGestureRecognizer()
         loadData()
-        
     }
     
     func setMapStatuse(statuse: MapStatuse) {
@@ -72,23 +79,33 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     }
     
     func setFootView(shope:CoffeeShop?) {
-        searchCtrl.searchBar.text = shope?.name ?? ""
-        nameLB.text = shope?.name ?? ""
-        urlLB.text = shope?.url ?? ""
+        guard let shope = shope else { return }
         
-        if shope?.url == "" {
+        searchCtrl.searchBar.text = shope.name
+        nameLB.text = shope.name
+        open_timeLB.text = shope.open_time
+        addressLB.text = shope.address
+        cheapLB.text = String(shope.cheap ?? 0)
+        musicLB.text = String(shope.music ?? 0)
+        quietLB.text = String(shope.quiet ?? 0)
+        seatLB.text = String(shope.seat ?? 0)
+        wifiLB.text = String(shope.wifi ?? 0)
+        tastyLB.text = String(shope.tasty ?? 0)
+        mrtLB.text = shope.mrt
+        open_timeLB.text = shope.open_time
+        socketLB.text = shope.socket
+        standing_deskLB.text = shope.standing_desk
+        urlLB.text = shope.url
+        
+        if shope.url == "" {
             urlLB.text = "無資料"
         }
-        addressLB.text = shope?.address
+        addressLB.text = shope.address
         if selectStore?.count != 0 && selectStore != nil {
             isPicking = true
-            print(selectStore)
         }
         
-        
-        //TODO:記得用Enum包起來以下
         setMapStatuse(statuse: .selectShope)
-        
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -132,7 +149,6 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         }
         DispatchQueue.main.async {
             map.reloadInputViews()
-            print("重整地圖")
         }
     }
     
@@ -155,7 +171,6 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     }
     
     func setMyClearButton() {
-        
         let clearButton = UIButton(type: .custom)
         clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
         clearButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
@@ -180,25 +195,49 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         naviCtrl.navigationBar.isTranslucent = true
         naviCtrl.view.backgroundColor = UIColor.clear
         
-        
         if let vc = storyboard?.instantiateViewController(identifier: "result") as? SearchResultVC {
             vc.data = self.pinsArray
             searchCtrl = UISearchController(searchResultsController: vc)
             searchCtrl.searchResultsUpdater = vc
+            searchCtrl.delegate = self
             
             self.navigationItem.searchController = searchCtrl
         }
-        
-
     }
     
+    func didDismissSearchController(_ searchController: UISearchController) {
+        if searchCtrl.searchBar.text == "" {
+            isPicking = false
+            setMapStatuse(statuse: .standard)
+        }
+    }
     
-    
-    func addSingleTap() {
-        let singleFinger = UITapGestureRecognizer(
-            target: self,
-            action: #selector(singleTap))
+    func addGestureRecognizer() {
+        let singleFinger = UITapGestureRecognizer(target: self,action: #selector(singleTap))
         self.view.addGestureRecognizer(singleFinger)
+        
+        for direction in [UISwipeGestureRecognizer.Direction.up,UISwipeGestureRecognizer.Direction.down] {
+            let gr = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+            gr.direction = direction
+            footView.addGestureRecognizer(gr)
+        }
+        
+    }
+    
+    @objc func swipe(gr:UISwipeGestureRecognizer) {
+        let direction = gr.direction
+        let viewMaxY = self.view.frame.maxY
+        switch direction {
+        case UISwipeGestureRecognizer.Direction.up:
+            footViewConstraY.constant = viewMaxY - footView.frame.height
+        case UISwipeGestureRecognizer.Direction.down:
+            footViewConstraY.constant = viewMaxY - addressLB.frame.maxY
+        default:
+            print("not going this way")
+        }
+        UIView.animate(withDuration: 0.3) {
+            self.footView.layoutIfNeeded()
+        }
     }
     
     @objc func singleTap() {
@@ -207,77 +246,41 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
             return
         }
         setNaviBarVisable(makeVisible: !checkNaviBarIsVisable())
-        
+        var status :MapStatuse = .standard
         switch isPicking {
         case true:
-            if !checkNaviBarIsVisable(){
-                print("清楚")
-                setMapStatuse(statuse: .clearMap)
-                return
-            }
-            print("選擇")
-            setMapStatuse(statuse: .selectShope)
-//            setFootViewVisable(makeVisible: !checkFootViewVisable())
-//            setTabbarVisable(makeVisible: false)
+            status = checkNaviBarIsVisable() ? .selectShope : .clearMap
         case false:
-            if !checkNaviBarIsVisable(){
-                print("清楚")
-                setMapStatuse(statuse: .clearMap)
-                return
-            }
-            print("一般")
-            setMapStatuse(statuse: .standard)
-//            setTabbarVisable(makeVisible: !checkTabbarIsVisiable())
-//            setFootViewVisable(makeVisible: false)
-            
+            status = checkNaviBarIsVisable() ? .standard    : .clearMap
         }
-        
+        setMapStatuse(statuse: status)
     }
-    
-    @IBOutlet weak var footView: UIView!
     
     func checkFootViewVisable() -> Bool {
         guard let footView = self.footView else { return false }
         return footView.frame.minY < self.view.frame.maxY
     }
     
-    //FIXME:要解決若使用者沒有點Cancel而點其他地方，footview也要有點cancel的效果
-    @objc func clickedCancel() {
-        selectStore = nil
-        isPicking = false
-        setFootView(shope: nil)
-        setFootViewVisable(makeVisible: false)
-        setTabbarVisable(makeVisible: true)
-    }
-    
     func setFootViewVisable(makeVisible: Bool) {
-        let footViewHight = self.footView.frame.height
-        let footViewMaxY = self.view.frame.maxY
+        let viewMaxY = self.view.frame.maxY
         
         self.view.bringSubviewToFront(footView)
         
-        footViewConstraY.constant = makeVisible ? (footViewMaxY - footViewHight) : footViewMaxY
+        footViewConstraY.constant = makeVisible ? (viewMaxY - addressLB.frame.maxY) : viewMaxY
         
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
     
-    @IBAction func pressPin(_ sender: Any) {
-        searchTF.text = "金色三麥"
-//        isPicking = true
-        
-        setTabbarVisable(makeVisible: false)
-        setFootViewVisable(makeVisible: true)
-        setNaviBarVisable(makeVisible: true)
-    }
     
     
-    @IBOutlet weak var footViewConstraY: NSLayoutConstraint!
     
     
     
 }
+
+
 
 
 

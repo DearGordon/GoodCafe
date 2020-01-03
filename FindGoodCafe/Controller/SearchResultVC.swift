@@ -49,6 +49,11 @@ class SearchResultVC: UITableViewController ,UISearchResultsUpdating ,UISearchBa
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let shope = filterList?[indexPath.row] else { return }
+        //TODO:transfer shope data to MapView
+    }
+    
 }
 
 
