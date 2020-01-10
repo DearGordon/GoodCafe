@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--咖啡地圖-->
         <scene sceneID="KpZ-8a-9Hn">
             <objects>
                 <viewController id="EsE-7p-8pj" customClass="MapViewController" customModule="FindGoodCafe" customModuleProvider="target" sceneMemberID="viewController">
@@ -268,7 +268,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4mh-Mk-iVY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dvr-rU-1uq"/>
+                    <navigationItem key="navigationItem" title="咖啡地圖" id="dvr-rU-1uq"/>
                     <connections>
                         <outlet property="addressLB" destination="9ts-mS-g6o" id="7il-eB-obx"/>
                         <outlet property="cheapLB" destination="3Jw-Sz-Fsa" id="0uh-39-Jsu"/>

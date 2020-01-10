@@ -8,11 +8,11 @@
 
 import UIKit
 
-class Session: NSObject {
+struct Session {
     
-    var shopesData: [CoffeeShop]?
+    private(set) var shopesData: [CoffeeShop]?
     var errorString: String?
-    static let share = Session()
+    static var share = Session()
     
     let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
     let urlSession = URLSession(configuration: .default)
@@ -36,7 +36,7 @@ class Session: NSObject {
         }
     }
     
-    func downloadData(url: String, complite: @escaping (Result<[CoffeeShop],Error>) -> Void) {
+    private func downloadData(url: String, complite: @escaping (Result<[CoffeeShop],Error>) -> Void) {
         
         guard let url = URL(string: urlString ) else { return }
 

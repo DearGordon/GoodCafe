@@ -9,13 +9,11 @@ import UIKit
 import CoreLocation
 import MapKit
 
-enum MapStatuse {
-    case selectShope
-    case standard
-    case clearMap
-}
 
-class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlertable, MKMapViewDelegate ,UISearchControllerDelegate {
+
+class MapViewController: UIViewController, ShowAlertable, MKMapViewDelegate {
+    
+    var mapViewmodel = MapViewModel()
     
     var searchCtrl: UISearchController!
     var searchResult :[CoffeeShop] = [CoffeeShop]()
@@ -59,6 +57,11 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         addSearchTFInNaviBar()
         addGestureRecognizer()
         loadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        zoomToUserLocat()
     }
     
     func setMapStatuse(statuse: MapStatuse) {
@@ -112,19 +115,18 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         guard let pinCoordinate = view.annotation?.coordinate else { return }
         
         selectStore = self.pinsArray.filter({Double($0.latitude!) == pinCoordinate.latitude && Double($0.longitude!) == pinCoordinate.longitude})
-        guard let shope = selectStore?[0] else { return }
+        
+        guard selectStore?.count != 0,let shope = selectStore?[0] else {
+                return
+        }
         setFootView(shope: shope)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        zoomToUserLocat()
-    }
+    
     
     //FIXME:currentLocation Btn Autolayout
     @IBAction func userLocationBtn(_ sender: Any) {
         self.zoomToUserLocat()
-        
     }
     
     func zoomToUserLocat() {
@@ -153,7 +155,7 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
     }
     
     let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
-
+    
     
     func setMap(){
         mapView.delegate = self
@@ -170,61 +172,21 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         self.showAlert(title: "Error", content: errorString, completion: nil)
     }
     
-    func setMyClearButton() {
-        let clearButton = UIButton(type: .custom)
-        clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
-        clearButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
-        clearButton.contentMode = .scaleAspectFit
-        clearButton.addTarget(self, action: #selector(clear(sender:)), for: .touchUpInside)
-        searchTF.rightView = clearButton
-        searchTF.rightViewMode = .always
-    }
     
-    @objc func clear(sender : AnyObject) {
-        if searchTF.text == "" { return }
-        isPicking = false
-        setFootViewVisable(makeVisible: false)
-        setTabbarVisable(makeVisible: true)
-        searchTF.text = ""
-    }
-    
-    func addSearchTFInNaviBar() {
-        guard let naviCtrl = self.navigationController else { return }
-        naviCtrl.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        naviCtrl.navigationBar.shadowImage = UIImage()
-        naviCtrl.navigationBar.isTranslucent = true
-        naviCtrl.view.backgroundColor = UIColor.clear
-        
-        if let vc = storyboard?.instantiateViewController(identifier: "result") as? SearchResultVC {
-            vc.data = self.pinsArray
-            searchCtrl = UISearchController(searchResultsController: vc)
-            searchCtrl.searchResultsUpdater = vc
-            searchCtrl.delegate = self
-            
-            self.navigationItem.searchController = searchCtrl
-        }
-    }
-    
-    func didDismissSearchController(_ searchController: UISearchController) {
-        if searchCtrl.searchBar.text == "" {
-            isPicking = false
-            setMapStatuse(statuse: .standard)
-        }
-    }
     
     func addGestureRecognizer() {
         let singleFinger = UITapGestureRecognizer(target: self,action: #selector(singleTap))
         self.view.addGestureRecognizer(singleFinger)
         
         for direction in [UISwipeGestureRecognizer.Direction.up,UISwipeGestureRecognizer.Direction.down] {
-            let gr = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+            let gr = UISwipeGestureRecognizer(target: self, action: #selector(swipeFootViewDetail))
             gr.direction = direction
             footView.addGestureRecognizer(gr)
         }
         
     }
     
-    @objc func swipe(gr:UISwipeGestureRecognizer) {
+    @objc func swipeFootViewDetail(gr:UISwipeGestureRecognizer) {
         let direction = gr.direction
         let viewMaxY = self.view.frame.maxY
         switch direction {
@@ -235,9 +197,11 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         default:
             print("not going this way")
         }
-        UIView.animate(withDuration: 0.3) {
+        
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: .allowUserInteraction, animations: {
             self.footView.layoutIfNeeded()
-        }
+        }, completion: nil)
+        
     }
     
     @objc func singleTap() {
@@ -256,27 +220,6 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
         setMapStatuse(statuse: status)
     }
     
-    func checkFootViewVisable() -> Bool {
-        guard let footView = self.footView else { return false }
-        return footView.frame.minY < self.view.frame.maxY
-    }
-    
-    func setFootViewVisable(makeVisible: Bool) {
-        let viewMaxY = self.view.frame.maxY
-        
-        self.view.bringSubviewToFront(footView)
-        
-        footViewConstraY.constant = makeVisible ? (viewMaxY - addressLB.frame.maxY) : viewMaxY
-        
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    
-    
-    
-    
     
 }
 
@@ -285,53 +228,5 @@ class MapViewController: UIViewController, SetTabbarAndNavibarVisible, ShowAlert
 
 
 
-
-
-
-
-
-protocol SetTabbarAndNavibarVisible {
-    func setNaviBarVisable(makeVisible: Bool)
-    func setTabbarVisable(makeVisible: Bool)
-}
-
-extension SetTabbarAndNavibarVisible where Self: UIViewController {
-    
-    func setNaviBarVisable(makeVisible: Bool) {
-        guard let naviContro = self.navigationController else { return }
-        
-        let naviBarHight = naviContro.navigationBar.frame.height
-        let statusHight = self.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 20
-        
-        let naviY: CGFloat = makeVisible ? statusHight : -naviBarHight
-        UIView.animate(withDuration: 0.3) {
-            naviContro.navigationBar.frame.origin.y = naviY
-            return
-        }
-    }
-    
-    func setTabbarVisable(makeVisible: Bool) {
-        guard let tabbarContro = self.tabBarController else { return }
-        let tabbarHight = tabbarContro.tabBar.frame.height
-        let viewY = self.view.frame.maxY
-        
-        let tabbarY: CGFloat = (makeVisible ? viewY-tabbarHight : viewY+tabbarHight)
-        
-        UIView.animate(withDuration: 0.3) {
-            tabbarContro.tabBar.frame.origin.y = tabbarY
-            return
-        }
-    }
-    
-    func checkNaviBarIsVisable() -> Bool {
-        guard let naviContro = self.navigationController else { return false }
-        return naviContro.navigationBar.frame.maxY > 0
-    }
-    
-    func checkTabbarIsVisiable() -> Bool {
-        guard let tabBarContro = self.tabBarController else { return false }
-        return tabBarContro.tabBar.frame.origin.y < self.view.frame.maxY
-    }
-}
 
 

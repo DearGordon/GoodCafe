@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5403468623A9CF8100BD095D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403468523A9CF8100BD095D /* ListTableViewController.swift */; };
 		5403468823A9D9A700BD095D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5403468723A9D9A700BD095D /* DetailViewController.swift */; };
+		540AACD923C8723E003E6ACA /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540AACD823C8723E003E6ACA /* ListViewModel.swift */; };
 		540B40B523B360B700C7261E /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 540B40B423B360B700C7261E /* SearchResultVC.swift */; };
 		544156FF23AB2740003A73FB /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 544156FE23AB2740003A73FB /* Map.storyboard */; };
 		5441570223AB2795003A73FB /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5441570123AB2795003A73FB /* List.storyboard */; };
@@ -26,6 +27,8 @@
 		544DB01923A25BEF0010595E /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DB01823A25BEF0010595E /* Session.swift */; };
 		544DB05F23A788A60010595E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DB05E23A788A60010595E /* Model.swift */; };
 		544DB06123A78AEB0010595E /* SQLCommon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544DB06023A78AEB0010595E /* SQLCommon.swift */; };
+		54FDE1D223C8374300BE22A7 /* MapViewController+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FDE1D123C8374300BE22A7 /* MapViewController+Extention.swift */; };
+		54FDE1D423C8666600BE22A7 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FDE1D323C8666600BE22A7 /* MapViewModel.swift */; };
 		A29CF4B9145B18980FDE0AF8 /* Pods_FindGoodCafeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D894E51F65BFECE94BD4D1D /* Pods_FindGoodCafeTests.framework */; };
 		B7F86DC397AB83BCFB22BCD2 /* Pods_FindGoodCafe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20B6E052E0C23FC814A00ED0 /* Pods_FindGoodCafe.framework */; };
 		D7B5B8F7ADA7901AB7BF77A9 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 925CFCAC71CDB246BCB61D54 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework */; };
@@ -56,6 +59,7 @@
 		25099032B78172739CCC6C50 /* Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe-FindGoodCafeUITests/Pods-FindGoodCafe-FindGoodCafeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5403468523A9CF8100BD095D /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		5403468723A9D9A700BD095D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		540AACD823C8723E003E6ACA /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		540B40B423B360B700C7261E /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
 		544156FE23AB2740003A73FB /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
 		5441570123AB2795003A73FB /* List.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = List.storyboard; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 		544DB01823A25BEF0010595E /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		544DB05E23A788A60010595E /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		544DB06023A78AEB0010595E /* SQLCommon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLCommon.swift; sourceTree = "<group>"; };
+		54FDE1D123C8374300BE22A7 /* MapViewController+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Extention.swift"; sourceTree = "<group>"; };
+		54FDE1D323C8666600BE22A7 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		5717AB233DED98B980A211F9 /* Pods-FindGoodCafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe.debug.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe.debug.xcconfig"; sourceTree = "<group>"; };
 		71BE1B70CE65DC5B5309BB85 /* Pods-FindGoodCafe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindGoodCafe.release.xcconfig"; path = "Target Support Files/Pods-FindGoodCafe/Pods-FindGoodCafe.release.xcconfig"; sourceTree = "<group>"; };
 		925CFCAC71CDB246BCB61D54 /* Pods_FindGoodCafe_FindGoodCafeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindGoodCafe_FindGoodCafeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +174,8 @@
 		544DAFE02398F9BD0010595E /* FindGoodCafe */ = {
 			isa = PBXGroup;
 			children = (
+				54FDE1D123C8374300BE22A7 /* MapViewController+Extention.swift */,
+				54FDE1D523C8666D00BE22A7 /* ViewModel */,
 				5441570723AB573D003A73FB /* Controller */,
 				5441570623AB5726003A73FB /* Model */,
 				5441570523AB5707003A73FB /* Manager */,
@@ -219,6 +227,15 @@
 				544DAFE72398F9BD0010595E /* Main.storyboard */,
 			);
 			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		54FDE1D523C8666D00BE22A7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				54FDE1D323C8666600BE22A7 /* MapViewModel.swift */,
+				540AACD823C8723E003E6ACA /* ListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8BF4B87A06BBC62F601630BC /* Pods */ = {
@@ -478,14 +495,17 @@
 			files = (
 				544DAFE62398F9BD0010595E /* MapViewController.swift in Sources */,
 				544DAFE22398F9BD0010595E /* AppDelegate.swift in Sources */,
+				54FDE1D223C8374300BE22A7 /* MapViewController+Extention.swift in Sources */,
 				544DB05F23A788A60010595E /* Model.swift in Sources */,
 				544DB06123A78AEB0010595E /* SQLCommon.swift in Sources */,
 				544DB01923A25BEF0010595E /* Session.swift in Sources */,
 				544DAFE42398F9BD0010595E /* SceneDelegate.swift in Sources */,
 				5403468623A9CF8100BD095D /* ListTableViewController.swift in Sources */,
 				5403468823A9D9A700BD095D /* DetailViewController.swift in Sources */,
+				540AACD923C8723E003E6ACA /* ListViewModel.swift in Sources */,
 				544DB01423A2496D0010595E /* Common.swift in Sources */,
 				540B40B523B360B700C7261E /* SearchResultVC.swift in Sources */,
+				54FDE1D423C8666600BE22A7 /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

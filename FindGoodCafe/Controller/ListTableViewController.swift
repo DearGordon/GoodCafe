@@ -10,17 +10,27 @@ import UIKit
 
 class ListTableViewController: UITableViewController,ShowAlertable {
     
+    var listViewModel = ListViewModel()
+    var shopeData :[CoffeeShop] = [] {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
     var seleteIndex:Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
+       initView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView.reloadData()
+        
+    }
+    
+    func initView() {
+        self.tableView.separatorStyle = .none
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -31,7 +41,6 @@ class ListTableViewController: UITableViewController,ShowAlertable {
     }
 
     // MARK: - Table view data source
-    // TODO: SearchBar?
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
