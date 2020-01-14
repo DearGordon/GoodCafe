@@ -15,7 +15,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k0z-4k-rJI" userLabel="FootView">
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k0z-4k-rJI" userLabel="FootView" customClass="FootView" customModule="FindGoodCafe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="896" width="414" height="696.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9jT-Lr-t76">
@@ -236,6 +236,22 @@
                                     <constraint firstItem="GIV-n9-YDQ" firstAttribute="leading" secondItem="k0z-4k-rJI" secondAttribute="leading" id="mFu-B9-dq6"/>
                                     <constraint firstItem="GIV-n9-YDQ" firstAttribute="top" secondItem="k0z-4k-rJI" secondAttribute="top" id="yTj-wQ-Bpb"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="addressLB" destination="9ts-mS-g6o" id="jl2-7L-Sqa"/>
+                                    <outlet property="cheapLB" destination="3Jw-Sz-Fsa" id="KO2-QK-hjr"/>
+                                    <outlet property="limited_timeLB" destination="k5T-fd-ydo" id="UaV-Tf-iye"/>
+                                    <outlet property="mrtLB" destination="2Bq-YO-2zR" id="Ipn-ne-eLg"/>
+                                    <outlet property="musicLB" destination="jvs-cf-N8g" id="jsU-eY-x4R"/>
+                                    <outlet property="nameLB" destination="uQx-Dg-H81" id="RKe-Bd-Clk"/>
+                                    <outlet property="open_timeLB" destination="YpE-cU-n9o" id="WCQ-cQ-oki"/>
+                                    <outlet property="quietLB" destination="lj2-TD-xQR" id="dgq-93-nCp"/>
+                                    <outlet property="seatLB" destination="Yv4-Ue-gsu" id="yPL-gD-Mty"/>
+                                    <outlet property="socketLB" destination="dGG-jr-wTF" id="Wce-mG-pqC"/>
+                                    <outlet property="standing_deskLB" destination="92r-81-Lke" id="t42-Il-35y"/>
+                                    <outlet property="tastyLB" destination="G6g-2k-WNL" id="L1Y-TC-hZH"/>
+                                    <outlet property="urlLB" destination="h29-lM-jY0" id="BBj-8k-RPe"/>
+                                    <outlet property="wifiLB" destination="sIn-SC-gGl" id="1fd-02-woT"/>
+                                </connections>
                             </view>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hga-e4-Aho">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -252,7 +268,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="k0z-4k-rJI" firstAttribute="trailing" secondItem="4mh-Mk-iVY" secondAttribute="trailing" id="6ID-GL-QFd"/>
                             <constraint firstItem="4mh-Mk-iVY" firstAttribute="bottom" secondItem="Ic4-GW-6u4" secondAttribute="bottom" constant="150" id="9ul-uN-1xu"/>
@@ -270,23 +286,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="咖啡地圖" id="dvr-rU-1uq"/>
                     <connections>
-                        <outlet property="addressLB" destination="9ts-mS-g6o" id="7il-eB-obx"/>
-                        <outlet property="cheapLB" destination="3Jw-Sz-Fsa" id="0uh-39-Jsu"/>
                         <outlet property="footView" destination="k0z-4k-rJI" id="78P-dw-kIs"/>
                         <outlet property="footViewConstraY" destination="Q6o-do-alP" id="EJI-A8-cXT"/>
-                        <outlet property="limited_timeLB" destination="k5T-fd-ydo" id="D6q-gu-M4y"/>
                         <outlet property="mapView" destination="hga-e4-Aho" id="Yir-OP-AmN"/>
-                        <outlet property="mrtLB" destination="2Bq-YO-2zR" id="exL-Pr-EKc"/>
-                        <outlet property="musicLB" destination="jvs-cf-N8g" id="vqd-9t-cFG"/>
-                        <outlet property="nameLB" destination="uQx-Dg-H81" id="T8A-NE-QTj"/>
-                        <outlet property="open_timeLB" destination="YpE-cU-n9o" id="qlG-3S-OVI"/>
-                        <outlet property="quietLB" destination="lj2-TD-xQR" id="7JN-oZ-pDo"/>
-                        <outlet property="seatLB" destination="Yv4-Ue-gsu" id="7ou-Tc-5Bn"/>
-                        <outlet property="socketLB" destination="dGG-jr-wTF" id="O2Y-UB-anD"/>
-                        <outlet property="standing_deskLB" destination="92r-81-Lke" id="Sit-SW-PBd"/>
-                        <outlet property="tastyLB" destination="G6g-2k-WNL" id="1bu-Ud-Ods"/>
-                        <outlet property="urlLB" destination="h29-lM-jY0" id="SFA-3O-422"/>
-                        <outlet property="wifiLB" destination="sIn-SC-gGl" id="e2S-f4-ytq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIR-zN-y9F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

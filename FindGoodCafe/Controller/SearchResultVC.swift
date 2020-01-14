@@ -30,13 +30,10 @@ class SearchResultVC: UITableViewController ,UISearchResultsUpdating ,UISearchBa
         }
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.delegate = self
-        if searchBar.text == "" {
-            let mapVC = MapViewController()
-            mapVC.footVis = false
-        }
-    }
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        searchBar.delegate = self
+//        //TODO:go to special shope after picked
+//    }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -51,7 +48,7 @@ class SearchResultVC: UITableViewController ,UISearchResultsUpdating ,UISearchBa
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let shope = filterList?[indexPath.row] else { return }
-        //TODO:transfer shope data to MapView
+        
     }
     
 }

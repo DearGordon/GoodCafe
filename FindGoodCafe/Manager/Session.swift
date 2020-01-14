@@ -17,18 +17,19 @@ struct Session {
     let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
     let urlSession = URLSession(configuration: .default)
     
-    func checkDataIsOK(){
+    func checkLocalDataExist() {
+        SQLCommon.shared.creatTable()
         let semaphore =  DispatchSemaphore(value: 0)
         
         if SQLCommon.shared.getSQLData().count != 0 {
             Session.share.shopesData = SQLCommon.shared.getSQLData()
-        }else{
-            
-            let urlString: String = "https://cafenomad.tw/api/v1.2/cafes/taipei"
+        } else {
             Session.share.downloadData(url: urlString) { (data) in
                 semaphore.signal()
                 switch data {
-                case .success(let value): Session.share.shopesData = value
+                case .success(let value):
+                    Session.share.shopesData = value
+                    value.forEach({SQLCommon.shared.addData(coffeeShop: $0)})
                 case .failure(let error): Session.share.errorString = error.localizedDescription
                 }
             }

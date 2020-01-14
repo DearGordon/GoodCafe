@@ -49,7 +49,7 @@ class SQLCommon: NSObject {
         
     }
     
-    func openConnect() -> Bool {
+    private func openConnect() -> Bool {
         var isOpen: Bool = false
         self.database = FMDatabase(path: self.filePath)
         guard let database = database else { return false }

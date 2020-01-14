@@ -7,28 +7,11 @@
 //
 
 import UIKit
+import MapKit
 
 extension MapViewController: UISearchControllerDelegate {
     
-    func setMyClearButton() {
-        let clearButton = UIButton(type: .custom)
-        clearButton.setImage(UIImage(named: "clearBtn"), for: .normal)
-        clearButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
-        clearButton.contentMode = .scaleAspectFit
-        clearButton.addTarget(self, action: #selector(clear(sender:)), for: .touchUpInside)
-        searchTF.rightView = clearButton
-        searchTF.rightViewMode = .always
-    }
-    
-    @objc func clear(sender : AnyObject) {
-        if searchTF.text == "" { return }
-        isPicking = false
-        setFootViewVisable(makeVisible: false)
-        setTabbarVisable(makeVisible: true)
-        searchTF.text = ""
-    }
-    
-    func addSearchTFInNaviBar() {
+    func addSearchBarInNaviBar() {
         guard let naviCtrl = self.navigationController else { return }
         naviCtrl.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         naviCtrl.navigationBar.shadowImage = UIImage()
@@ -36,7 +19,7 @@ extension MapViewController: UISearchControllerDelegate {
         naviCtrl.view.backgroundColor = UIColor.clear
         
         if let vc = storyboard?.instantiateViewController(identifier: "result") as? SearchResultVC {
-            vc.data = self.pinsArray
+            vc.data = mapViewModel.pinsArray
             searchCtrl = UISearchController(searchResultsController: vc)
             searchCtrl.searchResultsUpdater = vc
             searchCtrl.delegate = self
@@ -48,16 +31,55 @@ extension MapViewController: UISearchControllerDelegate {
     func didDismissSearchController(_ searchController: UISearchController) {
         if searchCtrl.searchBar.text == "" {
             isPicking = false
-            setMapStatuse(statuse: .standard)
+            setMapStatuse(statuse: .Standard)
         }
     }
 }
 
+//MARK: Gesture Area
+extension MapViewController {
+    func addGestureRecognizer() {
+        let singleFinger = UITapGestureRecognizer(target: self,action: #selector(singleTap))
+        self.view.addGestureRecognizer(singleFinger)
+        
+        for direction in [UISwipeGestureRecognizer.Direction.up,UISwipeGestureRecognizer.Direction.down] {
+            let gr = UISwipeGestureRecognizer(target: self, action: #selector(swipeFootViewDetail))
+            gr.direction = direction
+            footView.addGestureRecognizer(gr)
+        }
+    }
+    
+    @objc func swipeFootViewDetail(gr:UISwipeGestureRecognizer) {
+        let direction = gr.direction
+        let viewMaxY = self.view.frame.maxY
+        switch direction {
+        case UISwipeGestureRecognizer.Direction.up:
+            footViewConstraY.constant = viewMaxY - footView.frame.height
+        case UISwipeGestureRecognizer.Direction.down:
+            footViewConstraY.constant = viewMaxY - footView.addressLB.frame.maxY
+        default:
+            print("not going this way")
+        }
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 3, delay: 0, options: .allowUserInteraction, animations: {
+            self.footView.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    @objc func singleTap() {
+        setNaviBarVisable(makeVisible: !checkNaviBarIsVisable())
+        var status :MapStatuse = .Standard
+        switch isPicking {
+        case true:
+            status = checkNaviBarIsVisable() ? .SelectShope : .ClearMap
+        case false:
+            status = checkNaviBarIsVisable() ? .Standard    : .ClearMap
+        }
+        setMapStatuse(statuse: status)
+    }
+    
+}
 
-
-
-
-
+//MARK:Set Navi/TabBar/FootView
 extension MapViewController {
     
     func setNaviBarVisable(makeVisible: Bool) {
@@ -91,7 +113,8 @@ extension MapViewController {
         
         self.view.bringSubviewToFront(footView)
         
-        footViewConstraY.constant = makeVisible ? (viewMaxY - addressLB.frame.maxY) : viewMaxY
+        
+        footViewConstraY.constant = makeVisible ? (viewMaxY - footView.addressLB.frame.maxY) : viewMaxY
         
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0, options: .showHideTransitionViews, animations: {
             self.view.layoutIfNeeded()

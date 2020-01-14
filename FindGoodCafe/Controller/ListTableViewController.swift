@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListTableViewController: UITableViewController,ShowAlertable {
+class ListTableViewController: UITableViewController {
     
     var listViewModel = ListViewModel()
     var shopeData :[CoffeeShop] = [] {
@@ -23,12 +23,7 @@ class ListTableViewController: UITableViewController,ShowAlertable {
         super.viewDidLoad()
        initView()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
-    
+   
     func initView() {
         self.tableView.separatorStyle = .none
     }
@@ -60,7 +55,6 @@ class ListTableViewController: UITableViewController,ShowAlertable {
             cell.textLabel?.text = shopesData[indexPath.row].name
             cell.detailTextLabel?.text = shopesData[indexPath.row].address
         }
-        
         return cell
     }
     
