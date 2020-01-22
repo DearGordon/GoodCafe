@@ -17,7 +17,11 @@ enum MapStatuse {
 
 class MapViewModel {
     
-    var selectShope: CoffeeShop?
+    var selectShope: CoffeeShop? = nil {
+        didSet {
+            reloadView?()
+        }
+    }
     var pinsArray: [CoffeeShop] = []
     var reloadView: (()->Void)?
     

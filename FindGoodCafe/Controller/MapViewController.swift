@@ -18,6 +18,9 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
     var searchCtrl: UISearchController!
     let locationManager = CLLocationManager()
     var isPicking: Bool = false
+    var userlocation :CLLocationCoordinate2D? {
+        return locationManager.location?.coordinate
+    }
     
     var downloadError:String?
     var mapStatus: MapStatuse = .Standard
@@ -27,7 +30,7 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
     @IBOutlet weak var footView: FootView!
     
     @IBAction func userLocationBtn(_ sender: Any) {
-        self.zoomToUserLocat()
+        self.zoomToLocation(location: userlocation)
     }
     
     override func viewDidLoad() {
@@ -42,7 +45,7 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        zoomToUserLocat()
+        self.zoomToLocation(location: userlocation)
     }
     
     private func setMap(){
@@ -75,6 +78,13 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
             self.searchCtrl.searchBar.text = shope.name
             self.footView.setFootViewData(viewModel: shope)
             self.setMapStatuse(statuse: .SelectShope)
+            
+            guard let selectShop = self.mapViewModel.selectShope else { return }
+            guard let shopeLat = Double(selectShop.latitude!),
+                let shopeLong = Double(selectShop.longitude!) else { return }
+            let shopeLocation = CLLocationCoordinate2D(latitude: shopeLat, longitude: shopeLong)
+            self.zoomToLocation(location: shopeLocation)
+            
         }
     }
     
@@ -100,11 +110,11 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
         }
     }
     
-    private func zoomToUserLocat() {
-        if let userLocation = locationManager.location?.coordinate {
-            let viewRegion = MKCoordinateRegion(center: userLocation, latitudinalMeters: 200,longitudinalMeters: 200)
-            mapView.setRegion(viewRegion, animated: true)
-        }
+    private func zoomToLocation(location:CLLocationCoordinate2D?) {
+        guard let location = location else { return }
+        let viewRegion = MKCoordinateRegion(center: location, latitudinalMeters: 200,longitudinalMeters: 200)
+        mapView.setRegion(viewRegion, animated: true)
+        
     }
     
     

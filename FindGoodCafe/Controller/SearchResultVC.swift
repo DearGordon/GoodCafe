@@ -49,6 +49,7 @@ class SearchResultVC: UITableViewController ,UISearchResultsUpdating ,UISearchBa
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let shope = filterList?[indexPath.row] else { return }
         
+        
     }
     
 }
