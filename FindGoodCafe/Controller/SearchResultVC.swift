@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol TransferShope {
+    func transferShope(shope:CoffeeShop)
+}
+
 class SearchResultVC: UITableViewController ,UISearchResultsUpdating ,UISearchBarDelegate {
     
     var filterList: [CoffeeShop]?
     var data :[CoffeeShop]?
+    var selectShop: CoffeeShop?
+    var delegate: TransferShope?
     
     func updateSearchResults(for searchController: UISearchController) {
         searchController.searchBar.delegate = self
@@ -30,10 +36,12 @@ class SearchResultVC: UITableViewController ,UISearchResultsUpdating ,UISearchBa
         }
     }
     
-//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        searchBar.delegate = self
-//        //TODO:go to special shope after picked
-//    }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.delegate = self
+        //TODO:go to special shope after picked
+//        guard let selectShop = selectShop else { return }
+//        delegate?.transferShope(shope: selectShop)
+    }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -48,8 +56,9 @@ class SearchResultVC: UITableViewController ,UISearchResultsUpdating ,UISearchBa
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let shope = filterList?[indexPath.row] else { return }
-        
-        
+        selectShop = shope
+        delegate?.transferShope(shope: shope)
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

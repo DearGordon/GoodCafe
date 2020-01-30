@@ -9,6 +9,14 @@
 import UIKit
 import MapKit
 
+extension MapViewController: TransferShope {
+    
+    func transferShope(shope: CoffeeShop) {
+        mapViewModel.selectShope = shope
+    }
+    
+}
+
 extension MapViewController: UISearchControllerDelegate {
     
     func addSearchBarInNaviBar() {
@@ -19,6 +27,7 @@ extension MapViewController: UISearchControllerDelegate {
         naviCtrl.view.backgroundColor = UIColor.clear
         
         if let vc = storyboard?.instantiateViewController(identifier: "result") as? SearchResultVC {
+            vc.delegate = self
             vc.data = mapViewModel.pinsArray
             searchCtrl = UISearchController(searchResultsController: vc)
             searchCtrl.searchResultsUpdater = vc
@@ -36,13 +45,17 @@ extension MapViewController: UISearchControllerDelegate {
     }
 }
 
-//MARK: Gesture Area
+//MARK: Gesture Thing
 extension MapViewController {
-    func addGestureRecognizer() {
+    
+    func addGRInFootView() {
         let singleFinger = UITapGestureRecognizer(target: self,action: #selector(singleTap))
         self.view.addGestureRecognizer(singleFinger)
         
-        for direction in [UISwipeGestureRecognizer.Direction.up,UISwipeGestureRecognizer.Direction.down] {
+        for direction in [
+            UISwipeGestureRecognizer.Direction.up,
+            UISwipeGestureRecognizer.Direction.down]
+        {
             let gr = UISwipeGestureRecognizer(target: self, action: #selector(swipeFootViewDetail))
             gr.direction = direction
             footView.addGestureRecognizer(gr)
@@ -56,7 +69,7 @@ extension MapViewController {
         case UISwipeGestureRecognizer.Direction.up:
             footViewConstraY.constant = viewMaxY - footView.frame.height
         case UISwipeGestureRecognizer.Direction.down:
-            footViewConstraY.constant = viewMaxY - footView.addressLB.frame.maxY
+            footViewConstraY.constant = viewMaxY - footView.seatLB.frame.minY
         default:
             print("not going this way")
         }
@@ -114,7 +127,7 @@ extension MapViewController {
         self.view.bringSubviewToFront(footView)
         
         
-        footViewConstraY.constant = makeVisible ? (viewMaxY - footView.addressLB.frame.maxY) : viewMaxY
+        footViewConstraY.constant = makeVisible ? (viewMaxY - footView.seatLB.frame.minY) : viewMaxY
         
         UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 0.3, delay: 0, options: .showHideTransitionViews, animations: {
             self.view.layoutIfNeeded()

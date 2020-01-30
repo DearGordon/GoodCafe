@@ -9,8 +9,6 @@ import UIKit
 import CoreLocation
 import MapKit
 
-
-
 class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
     
     var mapViewModel = MapViewModel()
@@ -38,7 +36,7 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
         setMap()
         loadShopes()
         addSearchBarInNaviBar()
-        addGestureRecognizer()
+        addGRInFootView()
         laodPin()
         bindViewModel()
     }
@@ -84,7 +82,6 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
                 let shopeLong = Double(selectShop.longitude!) else { return }
             let shopeLocation = CLLocationCoordinate2D(latitude: shopeLat, longitude: shopeLong)
             self.zoomToLocation(location: shopeLocation)
-            
         }
     }
     
