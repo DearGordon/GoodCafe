@@ -11,7 +11,7 @@ import UIKit
 class ListTableViewController: UITableViewController {
     
     var listViewModel = ListViewModel()
-    var shopeData :[CoffeeShop] = [] {
+    var shopeData :[CoffeeShope] = [] {
         didSet {
             self.tableView.reloadData()
         }
@@ -35,7 +35,7 @@ class ListTableViewController: UITableViewController {
         detailVC.shopeDetail = shopesArray[selectIndex]
     }
 
-    // MARK: - Table view data source
+    //MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

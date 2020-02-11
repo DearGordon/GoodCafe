@@ -16,38 +16,39 @@ enum MapStatuse {
 }
 
 class MapViewModel {
+
+    var pinsArray: [CoffeeShope] = []
+    var reloadView: (()->Void)?
     
-    var selectShope: CoffeeShop? = nil {
+    var selectShope: CoffeeShope? = nil {
         didSet {
             reloadView?()
         }
     }
-    var pinsArray: [CoffeeShop] = []
-    var reloadView: (()->Void)?
     
-    var selectAnnotationView: MKAnnotationView? {
+    var selectedAnnotationView: MKAnnotationView? {
         didSet{
-            guard let shopView = selectAnnotationView else { return }
+            guard let shopView = selectedAnnotationView else { return }
             
             if let shopeCoordinate = shopView.annotation?.coordinate {
                 
-                let store: [CoffeeShop] = pinsArray.filter({Double($0.latitude!) == shopeCoordinate.latitude && Double($0.longitude!) == shopeCoordinate.longitude})
+                let store: [CoffeeShope] = pinsArray.filter({Double($0.latitude!) == shopeCoordinate.latitude && Double($0.longitude!) == shopeCoordinate.longitude})
                 guard store.count != 0 else { return }
-                selectShope = store[0]
+                self.selectShope = store[0]
             }
             reloadView?()
         }
     }
     
-    func loadData(array:[CoffeeShop], map: MKMapView ,errorString:@escaping (String?)->Void) {
-        guard Session.share.errorString != nil else {
+    func loadData(array:[CoffeeShope], map: MKMapView ,errorString:@escaping (String?)->Void) {
+        guard let error = Session.share.errorString else {
             self.pin(places: array, map: map)
             return
         }
-        errorString(Session.share.errorString)
+        errorString(error)
     }
     
-    func pin(places: [CoffeeShop], map: MKMapView){
+    func pin(places: [CoffeeShope], map: MKMapView){
         
         for place in places {
             let pin = MKPointAnnotation()

@@ -25,7 +25,7 @@ class FootView: UIView {
     @IBOutlet weak var mrtLB: UILabel!
     @IBOutlet weak var urlLB: UILabel!
     
-    func setFootViewData(viewModel: CoffeeShop) {
+    func setFootViewData(viewModel: CoffeeShope) {
         self.nameLB.text = viewModel.name
         self.open_timeLB.text = viewModel.open_time
         self.addressLB.text = viewModel.address

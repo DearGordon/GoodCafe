@@ -81,7 +81,7 @@ class SQLCommon: NSObject {
         }
     }
     
-    func addData(coffeeShop:CoffeeShop) {
+    func addData(coffeeShop:CoffeeShope) {
         if self.openConnect() {
             let addSQL: String = "insert into CoffeeShopTable(id,name,city,wifi,seat,quiet,tasty,cheap,music,address,latitude,longitude,url,limited_time,socket,standing_desk,mrt,open_time) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
             
@@ -112,8 +112,8 @@ class SQLCommon: NSObject {
         
     }
     
-    func getSQLData() -> [CoffeeShop] {
-        var coffeeShopArray: [CoffeeShop] = [CoffeeShop]()
+    func getSQLData() -> [CoffeeShope] {
+        var coffeeShopArray: [CoffeeShope] = [CoffeeShope]()
         
         if self.openConnect() {
             let getDataSQL = " select * from CoffeeShopTable"
@@ -121,7 +121,7 @@ class SQLCommon: NSObject {
             do {
                 let dataList: FMResultSet = try database.executeQuery(getDataSQL, values: nil)
                 while dataList.next() {
-                    let coffeeShop:CoffeeShop = CoffeeShop(id: dataList.string(forColumn: "id"), name: dataList.string(forColumn: "name"), city: dataList.string(forColumn: "city"), wifi: dataList.double(forColumn: "wifi"), seat: dataList.double(forColumn: "seat"), quiet: dataList.double(forColumn: "quiet"), tasty: dataList.double(forColumn: "quiet"), cheap: dataList.double(forColumn: "cheap"), music: dataList.double(forColumn: "music"), address: dataList.string(forColumn: "address"), latitude: dataList.string(forColumn: "latitude"), longitude: dataList.string(forColumn: "longitude"), url: dataList.string(forColumn: "url"), limited_time: dataList.string(forColumn: "limited_time"), socket: dataList.string(forColumn: "socket"), standing_desk: dataList.string(forColumn: "standing_desk"), mrt: dataList.string(forColumn: "mrt"), open_time: dataList.string(forColumn: "open_time"))
+                    let coffeeShop:CoffeeShope = CoffeeShope(id: dataList.string(forColumn: "id"), name: dataList.string(forColumn: "name"), city: dataList.string(forColumn: "city"), wifi: dataList.double(forColumn: "wifi"), seat: dataList.double(forColumn: "seat"), quiet: dataList.double(forColumn: "quiet"), tasty: dataList.double(forColumn: "quiet"), cheap: dataList.double(forColumn: "cheap"), music: dataList.double(forColumn: "music"), address: dataList.string(forColumn: "address"), latitude: dataList.string(forColumn: "latitude"), longitude: dataList.string(forColumn: "longitude"), url: dataList.string(forColumn: "url"), limited_time: dataList.string(forColumn: "limited_time"), socket: dataList.string(forColumn: "socket"), standing_desk: dataList.string(forColumn: "standing_desk"), mrt: dataList.string(forColumn: "mrt"), open_time: dataList.string(forColumn: "open_time"))
                     
                     coffeeShopArray.append(coffeeShop)
                 }

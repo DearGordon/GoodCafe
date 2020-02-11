@@ -86,7 +86,7 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        mapViewModel.selectAnnotationView = view
+        mapViewModel.selectedAnnotationView = view
         isPicking = true
     }
     

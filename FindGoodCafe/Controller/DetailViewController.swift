@@ -10,7 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var shopeDetail: CoffeeShop?
+    var shopeDetail: CoffeeShope?
 
     override func viewDidLoad() {
         super.viewDidLoad()

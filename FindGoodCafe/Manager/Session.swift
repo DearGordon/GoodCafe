@@ -10,7 +10,7 @@ import UIKit
 
 struct Session {
     
-    private(set) var shopesData: [CoffeeShop]?
+    private(set) var shopesData: [CoffeeShope]?
     var errorString: String?
     static var share = Session()
     
@@ -37,7 +37,7 @@ struct Session {
         }
     }
     
-    private func downloadData(url: String, complite: @escaping (Result<[CoffeeShop],Error>) -> Void) {
+    private func downloadData(url: String, complite: @escaping (Result<[CoffeeShope],Error>) -> Void) {
         
         guard let url = URL(string: urlString ) else { return }
 
@@ -57,7 +57,7 @@ struct Session {
             guard let data = data else { return }
             
             do{
-                let dataDecoded = try JSONDecoder().decode([CoffeeShop].self, from: data)
+                let dataDecoded = try JSONDecoder().decode([CoffeeShope].self, from: data)
                 complite(.success(dataDecoded))
             } catch {
                 complite(.failure(error))

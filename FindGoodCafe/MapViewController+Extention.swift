@@ -9,15 +9,12 @@
 import UIKit
 import MapKit
 
-extension MapViewController: TransferShope {
-    
-    func transferShope(shope: CoffeeShop) {
-        mapViewModel.selectShope = shope
-    }
-    
-}
-
+//MARK: - SearchController
 extension MapViewController: UISearchControllerDelegate {
+    
+    func transferShope(shope: CoffeeShope) {
+           mapViewModel.selectShope = shope
+       }
     
     func addSearchBarInNaviBar() {
         guard let naviCtrl = self.navigationController else { return }
@@ -27,7 +24,7 @@ extension MapViewController: UISearchControllerDelegate {
         naviCtrl.view.backgroundColor = UIColor.clear
         
         if let vc = storyboard?.instantiateViewController(identifier: "result") as? SearchResultVC {
-            vc.delegate = self
+            vc.mapVC = self
             vc.data = mapViewModel.pinsArray
             searchCtrl = UISearchController(searchResultsController: vc)
             searchCtrl.searchResultsUpdater = vc
@@ -45,7 +42,7 @@ extension MapViewController: UISearchControllerDelegate {
     }
 }
 
-//MARK: Gesture Thing
+//MARK: - Gesture Thing
 extension MapViewController {
     
     func addGRInFootView() {
@@ -92,7 +89,7 @@ extension MapViewController {
     
 }
 
-//MARK:Set Navi/TabBar/FootView
+//MARK: - Set Navi/TabBar/FootView
 extension MapViewController {
     
     func setNaviBarVisable(makeVisible: Bool) {
