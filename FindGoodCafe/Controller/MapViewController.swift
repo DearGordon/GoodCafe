@@ -20,6 +20,10 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
         return locationManager.location?.coordinate
     }
     
+    deinit {
+        print("已經被消滅")
+    }
+    
     var downloadError:String?
     var mapStatus: MapStatuse = .Standard
     
@@ -71,17 +75,17 @@ class MapViewController: UIViewController, ShowAlertable ,MKMapViewDelegate {
     }
     
     func bindViewModel() {
-        mapViewModel.reloadView = {
-            guard let shope = self.mapViewModel.selectShope else { return }
-            self.searchCtrl.searchBar.text = shope.name
-            self.footView.setFootViewData(viewModel: shope)
-            self.setMapStatuse(statuse: .SelectShope)
+        mapViewModel.reloadView = { [weak self] in
+            guard let shope = self?.mapViewModel.selectShope else { return }
+            self?.searchCtrl.searchBar.text = shope.name
+            self?.footView.setFootViewData(viewModel: shope)
+            self?.setMapStatuse(statuse: .SelectShope)
             
-            guard let selectShop = self.mapViewModel.selectShope else { return }
+            guard let selectShop = self?.mapViewModel.selectShope else { return }
             guard let shopeLat = Double(selectShop.latitude!),
                 let shopeLong = Double(selectShop.longitude!) else { return }
             let shopeLocation = CLLocationCoordinate2D(latitude: shopeLat, longitude: shopeLong)
-            self.zoomToLocation(location: shopeLocation)
+            self?.zoomToLocation(location: shopeLocation)
         }
     }
     
