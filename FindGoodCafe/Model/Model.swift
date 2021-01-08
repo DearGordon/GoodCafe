@@ -27,6 +27,4 @@ struct CoffeeShope : Decodable {
     var standing_desk: String?
     var mrt: String?
     var open_time: String?
-    
-    
 }

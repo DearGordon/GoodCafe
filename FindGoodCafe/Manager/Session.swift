@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Session {
+class Session {
     
     private(set) var shopesData: [CoffeeShope]?
     var errorString: String?
